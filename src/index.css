@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://gists.rawgit.com/mfd/09b70eb47474836f25a21660282ce0fd/raw/e06a670afcb2b861ed2ac4a1ef752d062ef6b46b/Gilroy.css");
+/* body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+} */
+.svg-green {
+  filter: invert(53%) sepia(55%) saturate(508%) hue-rotate(84deg) brightness(90%) contrast(96%);
+}
+.svg-white {
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+}
+.svg-black {
+  filter: invert(13%) sepia(0%) saturate(0%) hue-rotate(272deg) brightness(94%) contrast(97%);
+}
+.svg-red {
+  filter: invert(17%) sepia(92%) saturate(7391%) hue-rotate(0deg) brightness(99%) contrast(114%);
+}
+.svg-blue {
+  filter: invert(47%) sepia(82%) saturate(3064%) hue-rotate(197deg) brightness(100%) contrast(98%);
+}
+.Modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 2px solid #3b82f6;
+  width: 400px;
+  padding: 20px 10px;
+  border-radius: 8px;
+}
+@media (max-width: 480px) {
+  .Modal {
+    width: 90vw;
+  }
+}
+.Modal-Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0, 0.6);
+}
+.post-phone-field input[type="tel"] {
+  background-color: rgb(241 245 249 / 1);
+  padding: 0.5rem;
+  border-color: rgb(229 231 235 / 1);
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 0.25rem;
+}
+.post-phone-field.form-error input[type="tel"] {
+  border-color: #f00;
+}
+.Success-Modal {
+  border-width: 2px;
+  border-color: green;
+}
+.Error-Modal {
+  border-width: 2px;
+  border-color: red;
+}
+.no-select {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.no-select:focus {
+  outline: none !important;
+}
+.disable-text-selection {
+  -moz-user-select:none; /* firefox */
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE*/
+  user-select: none; /* Standard syntax */
+}
