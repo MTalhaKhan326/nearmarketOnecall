@@ -10,6 +10,7 @@ import Plot  from "../../Plot";
 import Rent from "../../Rent";
 import GalleriaHeader from "../../GalleriaHeader";
 import GalleriaFooter from "../../GalleriaFooter";
+import axios from "axios";
 // import Header1 from "../../Header1";
 // import Footer1 from "../../Footer1";
 
@@ -27,9 +28,55 @@ function GalleriaProperties({ onAppStoreClick = null, onGooglePlayClick = null }
   const openModal1 = useCallback(() => setIsOpen1(true), []);
   const closeModal1 = useCallback(() => setIsOpen1(false), []);
   let phone = "0327 5059283";
-  const handleButtonClick = (phone) => {
+  const handleButtonClick = async(phone , id) => {
+    try {
+        console.log("id",id);
+    const response = await axios.post(
+      "https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/log",
+      {
+        tag: "gp_clicked_on_call_now",
+        value: JSON.stringify({
+          localTime: new Date(),
+          link: window.location.href,
+          customQueryId: id,
+        }),
+        decodeJson: "true",
+
+        // Add more key-value pairs as needed
+      }
+    );
+
+    console.log(response.data); // Handle the response data as desired
+  } catch (error) {
+    console.error(error); // Handle any errors that occur during the request
+  }
+
     console.log("phoneee", phone);
     window.location.href = `tel:${phone}`;
+  };
+  const handleButton1Click = async () => {
+    openModal1();
+    try {
+        
+    //   console.log("id", id);
+      const response = await axios.post(
+        "https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/log",
+        {
+          tag: "gp_clicked_on_unsub_btn",
+          value: JSON.stringify({
+            localTime: new Date(),
+            link: window.location.href,
+          }),
+          decodeJson: "true",
+        }
+      );
+
+      console.log(response.data); // Handle the response data as desired
+    } catch (error) {
+      console.error(error); // Handle any errors that occur during the request
+    }
+
+
   };
   const options = {
     googlePlayAppUrl:
@@ -37,6 +84,29 @@ function GalleriaProperties({ onAppStoreClick = null, onGooglePlayClick = null }
     appStoreAppUrl: "https://apps.apple.com/us/app/one-call-app/id1524346082",
     baseVideoUrl: "https://www.youtube.com/embed/dZVvz_mX_Ro",
   };
+  useEffect(() => {
+    const postData = async () => {
+      try {
+        const response = await axios.post(
+          "https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/log",
+          {
+            tag: "gp_page_load",
+            value: JSON.stringify({
+              localTime: new Date(),
+              link: window.location.href,
+            }),
+            decodeJson: "true",
+          }
+        );
+
+        console.log(response.data); // Handle the response data as desired
+      } catch (error) {
+        console.error(error); // Handle any errors that occur during the request
+      }
+    };
+
+    postData();
+  }, []);
   return (
     <>
       {/* <Header1 /> */}
@@ -50,10 +120,10 @@ function GalleriaProperties({ onAppStoreClick = null, onGooglePlayClick = null }
         PLOTS & HOUSES
       </div>
       {data.map((item, index) => (
-        <div className="flex items-center justify-center my-2 h-[94px] ">
+        <div className="flex items-center justify-center my-2 ">
           <div className="bg-[#f4f4f4] w-[100%] flex flex-row mx-[12px] rounded-lg pl-[16.5px]">
             <div className="flex flex-col w-[67%] ">
-              <div className="text-[11px]  text-[#535353] text-opacity-100 mt-[22px]">
+              <div className="text-[15px]  text-[#535353] text-opacity-100 mt-[22px]">
                 {item.title}
               </div>
               <div className="text-[10px] mt-[25px] text-opacity-80 mb-[8px] text-[#5C5C5C] ">
@@ -64,7 +134,7 @@ function GalleriaProperties({ onAppStoreClick = null, onGooglePlayClick = null }
               <button
                 type="submit"
                 className="bg-[#6ACB00] hover:bg-[#77d711] hover:text-white text-white text-[10px] w-[56px] h-[25px] mt-[17px] mx-[27.6px] border-[1.5px] py-[1.5px] rounded"
-                onClick={() => handleButtonClick(item.phone)}
+                onClick={() => handleButtonClick(item.phone, item.id)}
               >
                 Call Now
               </button>
@@ -77,13 +147,13 @@ function GalleriaProperties({ onAppStoreClick = null, onGooglePlayClick = null }
         RENTAL PROPERTIES
       </div>
       {data1.map((item, index) => (
-        <div className="flex items-center justify-center my-2 h-[94px] ">
+        <div className="flex items-center justify-center my-2 ">
           <div className="bg-[#f4f4f4] w-[100%] flex flex-row mx-[12px] rounded-lg pl-[16.5px]">
             <div className="flex flex-col w-[67%] ">
-              <div className="text-[11px]  text-[#535353] text-opacity-100 mt-[22px]">
+              <div className="text-[15px]  text-[#535353] text-opacity-100 mt-[22px]">
                 {item.title}
               </div>
-              <div className="text-[11px]  text-[#535353] text-opacity-100 mt-[2px]">
+              <div className="text-[15px]  text-[#535353] text-opacity-100 mt-[2px]">
                 {item.title1}
               </div>
               <div className="text-[10px] mt-[22px] text-opacity-80 mb-[8px] text-[#5C5C5C] ">
@@ -94,7 +164,7 @@ function GalleriaProperties({ onAppStoreClick = null, onGooglePlayClick = null }
               <button
                 type="submit"
                 className="bg-[#6ACB00] hover:bg-[#77d711] hover:text-white text-white text-[10px] w-[56px] h-[25px] mt-[17px] mx-[27.6px] border-[1.5px] py-[1.5px] rounded"
-                onClick={() => handleButtonClick(item.phone)}
+                onClick={() => handleButtonClick(item.phone, item.id)}
               >
                 Call Now
               </button>
@@ -104,18 +174,19 @@ function GalleriaProperties({ onAppStoreClick = null, onGooglePlayClick = null }
       ))}
       {/* <Footer1 /> */}
       <GalleriaFooter />
-        <div className="text-[11px] text-[#2b2b2b] mt-[6px] ml-2 ">
-          I do not want to grown my business or not interested otherwise.
-        </div>
+      <div className="text-[11px] text-[#2b2b2b] mt-[6px] ml-2 ">
+        I do not want to grown my business or not interested otherwise.
+      </div>
       <div className=" flex flex-col items-center justify-center">
         <div
           className="text-[#FF0202] font-semibold underline text-[14px] cursor-pointer"
-          onClick={openModal1}
+        //   onClick={openModal1}
+          onClick={() => handleButton1Click()}
         >
           Unsubscribe
         </div>
       </div>
-    
+
       <ReactModal
         isOpen={isOpen1}
         onRequestClose={closeModal1}

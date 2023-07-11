@@ -4,6 +4,11 @@ import { AppImages } from "../Asset/images/image";
 import Main from "./Main";
 import { Link } from "react-router-dom";
 const GalleriaHeader = () => {
+  function formatDate(date) {
+    const options = { day: "numeric", month: "long", year: "numeric" };
+   return new Intl.DateTimeFormat("en-US", options).format(date);
+  }
+  const currentDate = formatDate(new Date());
   return (
     <div>
       <section className="w-[100%] h-[71px] bg-[#000000]">
@@ -14,7 +19,7 @@ const GalleriaHeader = () => {
             {/* </Link> */}
           </div>
           <div className="text-[#919191] text-[10px] mt-[14px] mr-[15px]">
-            10 July, 2023
+            {currentDate}
           </div>
         </div>
       </section>

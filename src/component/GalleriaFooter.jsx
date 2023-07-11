@@ -1,3 +1,4 @@
+import axios from "axios";
 import { AppImages } from "../Asset/images/image";
 
 function GalleriaFooter({ onAppStoreClick = null, onGooglePlayClick = null }) {
@@ -7,6 +8,50 @@ function GalleriaFooter({ onAppStoreClick = null, onGooglePlayClick = null }) {
     appStoreAppUrl: "https://apps.apple.com/us/app/one-call-app/id1524346082",
     baseVideoUrl: "https://www.youtube.com/embed/dZVvz_mX_Ro",
   };
+  const handleButtonAndroid = async () => {
+    // onGooglePlayClick();
+    try {
+      //   console.log("id", id);
+      const response = await axios.post(
+        "https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/log",
+        {
+          tag: "gp_clicked_on_appstore_btn",
+          value: JSON.stringify({
+            localTime: new Date(),
+            link: window.location.href,
+            store: "android",
+          }),
+          decodeJson: "true",
+        }
+      );
+
+      console.log(response.data); // Handle the response data as desired
+    } catch (error) {
+      console.error(error); // Handle any errors that occur during the request
+    }
+  };
+   const handleButtonIos = async () => {
+    //  onAppStoreClick();
+     try {
+       //   console.log("id", id);
+       const response = await axios.post(
+         "https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/log",
+         {
+           tag: "gp_clicked_on_appstore_btn",
+           value: JSON.stringify({
+             localTime: new Date(),
+             link: window.location.href,
+             store: "ios",
+           }),
+           decodeJson: "true",
+         }
+       );
+
+       console.log(response.data); // Handle the response data as desired
+     } catch (error) {
+       console.error(error); // Handle any errors that occur during the request
+     }
+   };
   return (
     <>
       <div className="text-[#2b2b2b] text-[16px] ml-2 font-semibold">
@@ -19,24 +64,25 @@ function GalleriaFooter({ onAppStoreClick = null, onGooglePlayClick = null }) {
             <div className="flex justify-center">
               <div className="m-1">
                 <a
-                //   href={options.googlePlayAppUrl}
+                  href={options.googlePlayAppUrl}
                   rel="noreferrer"
                   target="_blank"
-                  onClick={onGooglePlayClick}
+                  onClick={handleButtonAndroid}
                 >
                   <img
                     src={AppImages.googlePlay}
                     alt=""
                     className="w-[141px]"
+                    
                   />
                 </a>
               </div>
               <div className="m-1">
                 <a
-                //   href={options.appStoreAppUrl}
+                  href={options.appStoreAppUrl}
                   rel="noreferrer"
                   target="_blank"
-                  onClick={onAppStoreClick}
+                  onClick={handleButtonIos}
                 >
                   <img src={AppImages.apple} className="w-[141px]" />
                 </a>
