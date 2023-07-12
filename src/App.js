@@ -23,6 +23,10 @@ import BusinessRequest from './component/modules/DropDown/BusinessRequest.jsx';
 import BankAccountDropdown from './component/modules/DropDown/BankAccountDropDown.jsx';
 import BusinessLeadScreen from './component/modules/BusinessLead/BusinessLeadScreen.jsx';
 import GalleriaProperties from './component/modules/DropDown/GalleriaProperties';
+import GalleriaForm from './component/GalleriaForm';
+import DPage from './component/DPage';
+import PPage from './component/PPage';
+import MPage from './component/MPage';
 
 function App() {
   return (
@@ -67,16 +71,12 @@ function App() {
 
           {/* <Route exact path='/test' element={<TestPage />}></Route> */}
 
-          <Route
-            exact
-            path="/profile/:userId"
-            element={<BankAccountDropdown />}
-          ></Route>
-          <Route
-            exact
-            path="/gp"
-            element={<GalleriaProperties />}
-          ></Route>
+          <Route exact path="/d" element={<DPage />}></Route>
+          <Route exact path="/p" element={<PPage />}></Route>
+          <Route exact path="/m" element={<MPage />}></Route>
+          {/* <Route exact path="/galleria/form" element={<GalleriaForm />}></Route> */}
+          <Route exact path="/galleria/form" element={<GalleriaForm />}></Route>
+          <Route exact path="/gp" element={<GalleriaProperties />}></Route>
           <Route
             exact
             path="/businessRequest/:userId"

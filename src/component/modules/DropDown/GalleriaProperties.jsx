@@ -85,6 +85,7 @@ function GalleriaProperties({ onAppStoreClick = null, onGooglePlayClick = null }
     baseVideoUrl: "https://www.youtube.com/embed/dZVvz_mX_Ro",
   };
   useEffect(() => {
+    document.title("Galleria Properties");
     const postData = async () => {
       try {
         const response = await axios.post(
