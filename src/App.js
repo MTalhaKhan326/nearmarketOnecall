@@ -27,6 +27,10 @@ import GalleriaForm from './component/GalleriaForm';
 import DPage from './component/DPage';
 import PPage from './component/PPage';
 import MPage from './component/MPage';
+import GalleriaPropertyTable from './component/GalleriaPropertyTable';
+import CPage from './component/CPage';
+import CustomerForm from './component/CustomerForm';
+import Acceptance from './component/Acceptance';
 
 function App() {
   return (
@@ -43,7 +47,8 @@ function App() {
           <Route exact path="/button" element={<RadioButtons />}></Route>
           <Route exact path="/jobs" element={<InterviewForm />}></Route>
           <Route exact path="/employerForm" element={<EmployerForm />}></Route>
-
+          <Route exact path="/partner" element={<CustomerForm />}></Route>
+          <Route exact path="/acceptance" element={<Acceptance />}></Route>
           <Route
             exact
             path="/post/create"
@@ -74,8 +79,14 @@ function App() {
           <Route exact path="/d" element={<DPage />}></Route>
           <Route exact path="/p" element={<PPage />}></Route>
           <Route exact path="/m" element={<MPage />}></Route>
+          <Route exact path="/c" element={<CPage />}></Route>
           {/* <Route exact path="/galleria/form" element={<GalleriaForm />}></Route> */}
           <Route exact path="/galleria/form" element={<GalleriaForm />}></Route>
+          <Route
+            exact
+            path="/galleria/t"
+            element={<GalleriaPropertyTable />}
+          ></Route>
           <Route exact path="/gp" element={<GalleriaProperties />}></Route>
           <Route
             exact

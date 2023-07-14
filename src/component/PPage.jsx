@@ -5,6 +5,9 @@ import axios from "axios";
 import { useEffect } from "react";
 
 const PPage = () => {
+  useEffect(() => {
+    document.title = "OneCall";
+  }, []);
     useEffect(() => {
       // document.title("OneCall");
       const postData = async () => {

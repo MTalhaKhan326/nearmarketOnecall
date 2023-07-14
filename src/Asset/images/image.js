@@ -22,10 +22,15 @@ import close from "./close.svg"
 import upload from "./upload-1.svg"
 import pageNotFound from "./file-error-svgrepo-com.svg"
 import gallerialogo from "./galleria-logo-png.png"
+import edit from "./edit.png"
+import del from "./delete.png"
+
 
 export const AppImages = {
     gallerialogo,
     loading,
+    edit,
+    del,
     apple,
     googlePlay,
     logo,

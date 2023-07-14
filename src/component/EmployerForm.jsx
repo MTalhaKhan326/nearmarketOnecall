@@ -117,12 +117,8 @@ const EmployerForm = () => {
 
   return (
     <div>
-      <div className="block md:hidden">
-        {/* <Header /> */}
-      </div>
-      <div className="hidden md:block">
-        {/* <WebHeader1 /> */}
-      </div>
+      <div className="block md:hidden">{/* <Header /> */}</div>
+      <div className="hidden md:block">{/* <WebHeader1 /> */}</div>
 
       <div className="flex flex-col items-center w-[full]">
         <div className="text-[20px] md:text-[32px] text-[#282d32] font-medium md:text ">
@@ -327,105 +323,7 @@ const EmployerForm = () => {
               </div>
             </div>
           </div>
-          {/* <div className="w-full h-full bg-[#fcfcfc] rounded-md border-[2px] my-5 border-[#9c9c9c] py-3 px-3 text-black">
-            <div className="text-[#82817f] font-medium text-[18px]">
-              SELECT JOB TYPE
-            </div>
-            <div className="flex flex-wrap w-full">
-              <div className=" w-full lg:w-1/2 mt-5">
-                <div className="flex flex-row">
-                  <input
-                    type="radio"
-                    className="form-radio text-[#82817f] h-4 w-4 mt-2 focus:text-black"
-                    value="any"
-                    checked={selectedClass === "any"}
-                    onChange={handleOptionChange}
-                  />
-                  <div className="flex flex-col">
-                    <span className="ml-2 mt-[-5px] text-[#706f6d]">
-                      All Kind
-                    </span>
-                    <div className="ml-2 text-[12px] text-[#706f6d]">
-                      Any job with suitable salary
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-row my-4 md:my-[32px]">
-                  <input
-                    type="radio"
-                    className="form-radio text-gray-600 h-4 w-4 mt-2"
-                    value="class3"
-                    checked={selectedClass === "class3"}
-                    onChange={handleOptionChange}
-                  />
-                  <div className="flex flex-col">
-                    <span className="ml-2 mt-[-5px] text-[#706f6d]">
-                      Class3
-                    </span>
-                    <div className="ml-2 text-[12px] text-[#706f6d]">
-                      Admin & Support staff, Marketing & Sales, Recenptionist,
-                      etc
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className=" w-full lg:w-1/2 md:my-5">
-                <div className="flex flex-row">
-                  <input
-                    type="radio"
-                    className="form-radio text-gray-600 h-4 w-4 mt-2"
-                    value="class4"
-                    checked={selectedClass === "class4"}
-                    onChange={handleOptionChange}
-                  />
-                  <div className="flex flex-col">
-                    <span className="ml-2 mt-[-5px] text-[#706f6d]">
-                      Class4
-                    </span>
-                    <div className="ml-2 text-[12px] text-[#706f6d]">
-                      Office boy, Driver, Helper, Peon, Waiter, Maid , Delivery
-                      boy, Watchman, etc
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-row my-4">
-                  <input
-                    type="radio"
-                    className="form-radio text-gray-600 h-4 w-4 mt-2"
-                    value="class2"
-                    checked={selectedClass === "class2"}
-                    onChange={handleOptionChange}
-                  />
-                  <div className="flex flex-col">
-                    <span className="ml-2 mt-[-5px] text-[#706f6d]">
-                      Class 2
-                    </span>
-                    <div className="ml-2 text-[12px] text-[#706f6d]">
-                      Accounts, Call Center Agents, Manager level, etc
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className=" w-full lg:w-1/2 ">
-                <div className="flex flex-row">
-                  <input
-                    type="radio"
-                    className="form-radio text-gray-600 h-5 mt-2 w-5"
-                    value="class1"
-                    checked={selectedClass === "class1"}
-                    onChange={handleOptionChange}
-                  />
-                  <div className="flex flex-col">
-                    <span className="ml-2  text-[#706f6d]">Class 1</span>
-                    <div className="ml-2 text-[12px] text-[#706f6d]">
-                      Seniar Positions, Experienced Staff, Designer / Developer,
-                      Engineer of any kind,etc
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
+
           <div className="mt-4">
             <label
               className="block text-[#828181] font-semibold text-[18px] mb-2"
@@ -455,7 +353,13 @@ const EmployerForm = () => {
               </span>
             </div>
             {posted === 1 ? (
-              <div className="text-[20px] font-bold">loading....</div>
+              error === "" ? (
+                <div className="text-[20px] font-bold">loading....</div>
+              ) : (
+                <div className="text-[20px] font-bold text-red-500">
+                  {error}
+                </div>
+              )
             ) : (
               <div>
                 <button className="form-button rounded-md mb-5 text-[15px] w-[100px] md:px-2 md:w-[130px] h-[45px] bg-[#009bfb] hover:bg-lightBlue-600 text-white">
@@ -466,9 +370,7 @@ const EmployerForm = () => {
           </div>
         </form>
         {submitted === 500 ? (
-          <div className="font-semibold text-red-700">
-            {error}
-          </div>
+          <div className="font-semibold text-red-700">{error}</div>
         ) : null}
       </div>
       <Footer />

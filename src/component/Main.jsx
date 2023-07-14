@@ -25,6 +25,9 @@ const Main = () => {
   }
 
   useEffect(() => {
+    document.title = "OneCall";
+  }, []);
+  useEffect(() => {
     if(data === null && queryId && markerId) {
       // log page load
       BaseApi.logQPageLoad({ markerId, queryId })

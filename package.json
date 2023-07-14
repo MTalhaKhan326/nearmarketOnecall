@@ -21,6 +21,7 @@
     "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
     "react-flags-select": "^2.2.3",
+    "react-helmet": "^6.1.0",
     "react-medium-image-zoom": "^5.1.2",
     "react-modal": "^3.16.1",
     "react-phone-number-input": "^3.2.19",
