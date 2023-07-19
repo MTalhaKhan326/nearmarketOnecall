@@ -81,7 +81,7 @@ function GalleriaProperties1() {
   }
 
   async function markLeadAsRead() {
-    return axios.post("https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/mark-lead-as-read", {
+    return axios.post("https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/oc92/general-request?action=update-lead-as-read", {
       marker_id,
       query_id,
     })

@@ -92,7 +92,7 @@ function App() {
           <Route exact path="/gp" element={<GalleriaProperties />}></Route>
           <Route
             exact
-            path="/gp/:markder_id/:query_id"
+            path="/gp/lead"
             element={<GalleriaProperties1 />}
           ></Route>
           <Route
