@@ -392,6 +392,7 @@ const Total =
                   <option value="ac service">AC Service</option>
                   <option value="jobshr">Jobs(HR)</option>
                   <option value="mechanic">Mechanic</option>
+                  <option value="IT services">IT Services</option>
                   <option value="pet care">Pet Care</option>
                   <option value="Producer">Producer</option>
                   <option value="Executive Producer">Executive Producer</option>
@@ -465,9 +466,8 @@ const Total =
                     }));
                   }
                 }}
-              
               />
-                
+
               {/* <button onClick={handleIncrement}>+</button>
               <button onClick={handleDecrement}>-</button> */}
             </div>
@@ -497,6 +497,7 @@ const Total =
                   have to register an additional 20 Businesses. Your Shared
                   Structure is :
                 </div>
+                <div>Revenue Shared : 10%</div>
                 <div>1-10 Registered Businesses : 20%</div>
                 <div>11-30 Registered Businesses : 25%</div>
                 <div>Above30 Registered Businesses : 30%</div>

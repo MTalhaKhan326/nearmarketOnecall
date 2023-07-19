@@ -21,12 +21,12 @@ const Acceptance = (props) => {
        console.log(parsedData);
      }
    }, [location.search]);
-   const Total =
-     data?.revenue * 1 +
-     data.revenue * 2 +
-     data.revenue * 3 +
-     data.revenue * 7 +
-     data.revenue * 10;
+  //  const Total =
+  //    data?.revenue * 1 +
+  //    data.revenue * 2 +
+  //    data.revenue * 3 +
+  //    data.revenue * 7 +
+  //    data.revenue * 10;
      const sendSms = async (number) => {
        // closeModal1()
        console.log("Hi")
@@ -39,6 +39,18 @@ const Acceptance = (props) => {
          navigate("/partner");
        }
      };
+     const customers = data?.customers;
+     const customer1 = customers*2;
+     const customer2 = customer1 + customers;
+     const customer3 = customer2 * 2;
+     const customer4 = customer3 * 2;
+     const revenue = data?.revenue * 0.10;
+     const revenue1 = (revenue *2) ; 
+    const revenue2 = revenue1 + revenue; 
+    const wholerev = revenue + revenue1 + revenue2;
+    const revenue3 = wholerev ; 
+    const revenue4 = wholerev * 2 ; 
+    const total = revenue + revenue1 + revenue2 + revenue3 + revenue4
   return (
     <div>
       {" "}
@@ -48,7 +60,7 @@ const Acceptance = (props) => {
           Request for Market Partner
         </div>
       </div>
-      <div className='md:px-[50px] px-2'>
+      <div className="md:px-[50px] px-2">
         <div className=" flex flex-col">
           <div className="w-full flex flex-row">
             <div className="w-[50%] ">Name :</div>
@@ -99,7 +111,7 @@ const Acceptance = (props) => {
             </thead>
             <tbody>
               <tr className="border-b">
-                <td className="px-4 py-2">{data.customers}</td>
+                <td className="px-4 py-2">{customers}</td>
 
                 <td className="px-4 py-2">
                   {data.days >= 30
@@ -110,10 +122,10 @@ const Acceptance = (props) => {
                     ? "3 month"
                     : data.days}
                 </td>
-                <td className="px-4 py-2">{data.revenue}</td>
+                <td className="px-4 py-2">{revenue}</td>
               </tr>
               <tr className="border-b">
-                <td className="px-4 py-2">{data.customers * 2}</td>
+                <td className="px-4 py-2">{customer1}</td>
                 <td className="px-4 py-2">
                   {data.days * 2 >= 30
                     ? "1 month"
@@ -123,10 +135,10 @@ const Acceptance = (props) => {
                     ? "3 months"
                     : data.days * 2}
                 </td>
-                <td className="px-4 py-2">{data.revenue * 2}</td>
+                <td className="px-4 py-2">{revenue1}</td>
               </tr>
               <tr className="border-b">
-                <td className="px-4 py-2">{data.customers * 3}</td>
+                <td className="px-4 py-2">{customer2}</td>
                 <td className="px-4 py-2">
                   {data.days * 3 >= 30
                     ? "1 month"
@@ -136,22 +148,22 @@ const Acceptance = (props) => {
                     ? "3 months"
                     : data.days * 3}
                 </td>
-                <td className="px-4 py-2">{data.revenue * 3}</td>
+                <td className="px-4 py-2">{revenue2}</td>
               </tr>
               <tr className="border-b">
-                <td className="px-4 py-2">{data.customers * 4}</td>
+                <td className="px-4 py-2">{customer3}</td>
                 <td className="px-4 py-2">2 months</td>
-                <td className="px-4 py-2">{data.revenue * 7}</td>
+                <td className="px-4 py-2">{revenue3}</td>
               </tr>
               <tr className="border-b">
-                <td className="px-4 py-2">{data.customers * 5}</td>
+                <td className="px-4 py-2">{customer4}</td>
                 <td className="px-4 py-2">3 months</td>
-                <td className="px-4 py-2">{data.revenue * 10}</td>
+                <td className="px-4 py-2">{revenue4}</td>
               </tr>
               <tr className="border-b">
                 <td className="px-4 py-2">{}</td>
                 <td className="px-4 py-2">Total</td>
-                <td className="px-4 py-2">{Total}</td>
+                <td className="px-4 py-2">{total}</td>
               </tr>
             </tbody>
           </table>
@@ -159,7 +171,7 @@ const Acceptance = (props) => {
         <div className="flex justify-end">
           <button
             className="form-button rounded-md mb-5 mt-3 text-[15px] w-[100px]  md:px-2 md:w-[130px] h-[45px] bg-[#009bfb] hover:bg-lightBlue-600 text-white"
-              onClick={() => sendSms(data)}
+            onClick={() => sendSms(data)}
           >
             Submit Request
           </button>
