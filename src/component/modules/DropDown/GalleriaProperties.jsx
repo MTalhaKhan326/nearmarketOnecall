@@ -147,9 +147,9 @@ function GalleriaProperties({ onAppStoreClick = null, onGooglePlayClick = null }
         </div>
       ))}
 
-      {/* <div className="text-[11px] mt-[18px] text-right mr-[22px] text-[#535353]">
+      <div className="text-[11px] mt-[18px] text-right mr-[22px] text-[#535353]">
         RENTAL PROPERTIES
-      </div> */}
+      </div>
       {data1.map((item, index) => (
         <div className="flex items-center justify-center my-2 ">
           <div className="bg-[#f4f4f4] w-[100%] flex flex-row mx-[12px] rounded-lg pl-[16.5px]">

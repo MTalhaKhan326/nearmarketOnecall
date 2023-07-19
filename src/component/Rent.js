@@ -1,13 +1,13 @@
 import { AppImages } from "../Asset/images/image";
 const images = AppImages;
 const Rent = [
-  // {
-  //   title: "1 Kanal House for Rent, required in DHA 4 or 5",
-  //   // title1: "Budget 70,000/-",
-  //   time: "11:23 PM 14 July, 2023",
-  //   phone: "0330 5345346",
-  //   id: "r1",
-  // },
+  {
+    title: "10 Marla House for Rent, required in DHA",
+    // title1: "Budget 70,000/-",
+    time: "11:23 PM 15 July, 2023",
+    phone: "0330 5345346",
+    id: "r1",
+  },
   // {
   //   title: "5 Marla House required on rent in DHA 1, 2 or 3",
   //   time: "2:22 PM 11 July, 2023",

@@ -146,8 +146,9 @@ const Total =
     }
   }
   const [resData, SetresData]= useState('');
+  const[sub, setSub]= useState('')
   const onSubmit = async (e) => {
-    
+    setSub(1);
     // openModal1();
     e.preventDefault();
     console.log({
@@ -245,7 +246,6 @@ const Total =
                       email: e.target.value,
                     }));
                   }}
-                  
                 />
               </div>
               <div className="mt-4">
@@ -384,13 +384,42 @@ const Total =
                 >
                   <option value="">Category</option>
                   <option value="job">Job</option>
+                  <option value="hr">HR</option>
                   <option value="property">Property</option>
                   <option value="food">Food</option>
                   <option value="mobilephone">Mobile Shop</option>
                   <option value="electrician">Electrician</option>
                   <option value="ac service">AC Service</option>
+                  <option value="jobshr">Jobs(HR)</option>
                   <option value="mechanic">Mechanic</option>
                   <option value="pet care">Pet Care</option>
+                  <option value="Producer">Producer</option>
+                  <option value="Executive Producer">Executive Producer</option>
+                  <option value="Storyboard Artist">Storyboard Artist</option>
+                  <option value="Camera operators">Camera operators</option>
+                  <option value="Set designer">Set designer</option>
+                  <option value="Studio technician">Studio technician</option>
+                  <option value="Writer">Writer</option>
+                  <option value="Editor ">Editor </option>
+                  <option value="Music mixer">Music mixer</option>
+                  <option value="Social media manager">
+                    Social media manager
+                  </option>
+                  <option value="Content creator">Content creator</option>
+                  <option value="Physician">Physician</option>
+                  <option value="Photographer">Photographer</option>
+                  <option value="Actor">Actor</option>
+                  <option value="Model">Model</option>
+                  <option value="Extras Day Player">Extras Day Player</option>
+                  <option value="Backstage Worker">Backstage Worker</option>
+                  <option value="Makeup Artist">Makeup Artist</option>
+                  <option value="Hair Artist ">Hair Artist</option>
+                  <option value="Costume designer">Costume designer</option>
+                  <option value="Caterer">Caterer </option>
+                  <option value="Transportation Management">
+                    Transportation Management
+                  </option>
+                  <option value="Security">Security</option>
                 </select>
               </div>
             </div>
@@ -425,11 +454,8 @@ const Total =
                 required
                 value={formFields.days}
                 min={10}
-                className="form-input border px-3 py-3
-          border-[#5e5954]
-          rounded-md
-          focus:outline-none
-          w-full h-[45px]"
+                max={15}
+                className="form-input border px-3 py-3 border-[#5e5954] rounded-md focus:outline-none w-full h-[45px]"
                 onChange={(e) => {
                   const inputValue = parseInt(e.target.value);
                   if (!isNaN(inputValue) && inputValue >= 10) {
@@ -439,7 +465,9 @@ const Total =
                     }));
                   }
                 }}
+              
               />
+                
               {/* <button onClick={handleIncrement}>+</button>
               <button onClick={handleDecrement}>-</button> */}
             </div>
@@ -474,7 +502,7 @@ const Total =
                 <div>Above30 Registered Businesses : 30%</div>
               </div>
               <div className="w-full ml-5 mt-[35px] flex justify-end">
-                {posted === 1 ? (
+                {/* {posted === 1 ? (
                   error === "" ? (
                     <div className="text-[20px] font-bold">loading....</div>
                   ) : (
@@ -482,17 +510,29 @@ const Total =
                       {error}
                     </div>
                   )
-                ) : (
+                ) : ( */}
+                {sub === "" ? (
                   <div>
                     <button className="form-button rounded-md mb-5 text-[15px] w-[100px] md:px-2 md:w-[130px] h-[45px] bg-[#009bfb] hover:bg-lightBlue-600 text-white">
                       Next
                     </button>
                   </div>
+                ) : (
+                  <div className="text-[20px] font-bold">loading....</div>
                 )}
+
+                {/* )} */}
               </div>
             </div>
           </div>
         </form>
+        {sub === "" ? (
+          <div></div>
+        ) : (
+          <div className="text-[26px] font-bold text-red-500 flex justify-center">
+            Thanks for becoming a market partner of OneCallApp
+          </div>
+        )}
         {submitted === 500 ? (
           <div className="font-semibold text-red-700">{error}</div>
         ) : null}

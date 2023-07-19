@@ -31,6 +31,7 @@ import GalleriaPropertyTable from './component/GalleriaPropertyTable';
 import CPage from './component/CPage';
 import CustomerForm from './component/CustomerForm';
 import Acceptance from './component/Acceptance';
+import GalleriaProperties1 from './component/modules/DropDown/GalleriaProperties1';
 
 function App() {
   return (
@@ -87,7 +88,16 @@ function App() {
             path="/galleria/t"
             element={<GalleriaPropertyTable />}
           ></Route>
-          <Route exact path="/gp" element={<GalleriaProperties />}></Route>
+          <Route
+            exact
+            path="/gp"
+            element={<GalleriaProperties />}
+          ></Route>
+          <Route
+            exact
+            path="/gp/:markder_id/:query_id"
+            element={<GalleriaProperties1 />}
+          ></Route>
           <Route
             exact
             path="/businessRequest/:userId"
