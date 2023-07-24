@@ -33,6 +33,8 @@ import CustomerForm from './component/CustomerForm';
 import Acceptance from './component/Acceptance';
 import GalleriaProperties1 from './component/modules/DropDown/GalleriaProperties1';
 import ImageUploader from './component/ImageUploader';
+import GalleriaLeadsListing from './component/modules/DropDown/GalleriaLeadsListing';
+import ImageUploaderr from './ImageUploader';
 
 function App() {
   return (
@@ -97,9 +99,15 @@ function App() {
           ></Route>
           <Route
             exact
-            path="/image"
-            element={<ImageUploader />}
+            path="/gp/leads/listing"
+            element={<GalleriaLeadsListing />}
           ></Route>
+          <Route
+            exact
+            path="/uploader"
+            element={<ImageUploaderr/>}
+          ></Route>
+          <Route exact path="/image" element={<ImageUploader />}></Route>
           <Route
             exact
             path="/businessRequest/:userId"
