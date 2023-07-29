@@ -13,7 +13,7 @@ const GalleriaHeader = () => {
     <div>
       <section className="w-[100%] h-[71px] bg-[#000000]">
         <div className="flex flex-row justify-between">
-          <div className="w-[80px] sm:rounded-3xl">
+          <div className="w-[80px]">
             {/* <Link to={`/`}> */}
             <img src={AppImages.gallerialogo} alt="" />
             {/* </Link> */}

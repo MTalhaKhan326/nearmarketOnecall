@@ -1,154 +1,74 @@
-// ImageUploader.js
+// ExcelToJsonConverter.js
 import React, { useState } from "react";
 import firebase_service from "./utils/firebase_service";
 import axios from "axios";
-import * as XLSX from 'xlsx';
+import * as XLSX from "xlsx";
 
-const ImageUploader = () => {
-  const [selecteddata, setSelectedData] = useState('');
-   const [formData, setFormData] = useState({
-     category: "",
-     lat: "",
-     lng: "",
-     broadcast_tag: "",
-     images: [],
-     city: "",
-     address: "",
-     region: "Punjab",
-     country: "Pakistan",
-     timezone: "Asia/Karachi",
-     category_tags: "",
-     source: "",
-     status: "Active",
-   });
-   const handleInputChange = (event) => {
-     const { name, value } = event.target;
-     setFormData((prevData) => ({
-       ...prevData,
-       [name]: value,
-     }));
-   };
-  const[data,setData]=useState('');
-
-  const handleImageChange = (event) => {
-    const files = event.target.files;
+const ExcelToJsonConverter = () => {
+  const [selecteddata, setSelectedData] = useState("");
+  const [formData, setFormData] = useState({
+    category: "",
+    lat: "",
+    lng: "",
+    broadcast_tag: "",
+    images: [],
+    city: "",
+    address: "",
+    region: "Punjab",
+    country: "Pakistan",
+    timezone: "Asia/Karachi",
+    category_tags: "",
+    source: "",
+    status: "Active",
+  });
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
     setFormData((prevData) => ({
       ...prevData,
-      images: [...prevData.images, ...files],
+      [name]: value,
     }));
   };
-   function processVisionApiResponse(visionResponse) {
-     
-     const res = visionResponse?.responses[0]["fullTextAnnotation"];
-     if (res && res.text) {
-       let extractedData = [];
-       const t1 = res.text.split("\n");
-       t1.forEach((r1, r1Index) => {
-         let name;
-         let phone;
-         const t2 = r1.indexOf("+92");
-         if (t2 !== -1 && t2 !== 0) {
-           const t3 = t1[r1Index - 1];
-           if (t3) {
-             name = t3;
-             phone = r1.substring(t2);
-           }
-         } else if (t2 !== -1 && t2 === 0) {
-           phone = r1;
-         }
+  const [data, setData] = useState("");
+const [jsonData, setJsonData] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
 
-         if (name || phone) {
-           extractedData.push({
-             name: name?.replace(/[~]/gi, ""),
-             phone: phone?.replace(/[^0-9]/gi, ""),
-           });
-         }
-         
-        //  data.push(extractedData);
-       });
-      //  console.log("ExtractedData",data)
-       return extractedData;
-     }
-     return null;
-   }
-  async function callVisionApi(image) {
-    const url =
-      "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyBxh8DT3s64AR1py7V5KHuHm7kvlM3D5sE";
-    const body = {
-      requests: [
-        {
-          image: {
-            content: image,
-          },
-          features: [
-            {
-              type: "TEXT_DETECTION",
-            },
-          ],
-        },
-      ],
-    };
-    // const data = [];
-    const res = await axios.post(url, body);
-   const vr = await processVisionApiResponse(res.data);
-  //  console.log("Vrrrrr",vr)
-    return vr;
-  }
-  async function convertImagesToBase64(files) {
-    try {
-      // Create an array to hold the promises
-      const promises = Array.from(files).map((file) => {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-
-          reader.onload = () => {
-            resolve(reader.result);
-          };
-
-          reader.onerror = (error) => {
-            reject(error);
-          };
-
-          // Read the file as a data URL (base64-encoded)
-          reader.readAsDataURL(file);
-        });
-      });
-
-      // Wait for all promises to resolve using Promise.all
-      const base64Images = await Promise.all(promises);
-      // console.log("Base64-encoded Images", base64Images);
-      const data = [];
-      for await (let image of base64Images) {
-        let base64 = image.split("base64,");
-        base64 = base64[base64.length - 1];
-
-        const vr = await callVisionApi(base64);
-        data.push(vr);
-        // console.log("vr",vr);
-      }
-      setSelectedData(data);
-// const vr = await processVisionApiResponse();
-console.log("Dataaaaaaaaaaa",data);
-
-      // Return the array of base64-encoded images
-      return base64Images;
-    } catch (error) {
-      console.error("Error converting images to base64:", error);
-      throw error;
-    }
-  }
-const [submitted , setsubmitted]= useState('')
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+  };
+//   
+  const [submitted, setsubmitted] = useState("");
   const handleSubmit = () => {
-      const fileInput = document.querySelector('input[type="file"]');
-      if (fileInput.files.length === 0) {
-        // No images selected, prevent form submission
-        alert("Please select at least one image.");
-        return false;
-      }
+    const fileInput = document.querySelector('input[type="file"]');
+    if (fileInput.files.length === 0) {
+      // No images selected, prevent form submission
+      alert("Please select at least one image.");
+      return false;
+    }
+     if (!selectedFile) {
+       console.log("Please select an Excel file.");
+       return;
+     }
+
+     const reader = new FileReader();
+
+     reader.onload = (event) => {
+       const data = event.target.result;
+       const workbook = XLSX.read(data, { type: "binary" });
+       const firstSheetName = workbook.SheetNames[0];
+       const sheetData = XLSX.utils.sheet_to_json(
+         workbook.Sheets[firstSheetName]
+       );
+
+       setJsonData(sheetData);
+       setSelectedData(sheetData)
+     };
+
+     reader.readAsBinaryString(selectedFile);
     setsubmitted(1);
     // console.log("SelectedImages",selectedImages)
-     console.log("Form Data:", formData);
-    convertImagesToBase64(formData.images);
+    console.log("Form Data:", formData);
+    // convertImagesToBase64(formData.images);
     // if (selectedImages.length === 0) {
     //   console.log("No images selected!");
     //   return;
@@ -170,71 +90,39 @@ const [submitted , setsubmitted]= useState('')
     //     console.error("Error uploading images:", error);
     //   });
   };
-   const handleExportToMarkers = async() => {
-    const data = selecteddata.flat(1)
-   console.log("Markersss",data)
+  const handleExportToMarkers = async () => {
+    // const data = selecteddata.flat(1);
+    // setSelectedData();
+    console.log("Markersss", jsonData);
     try {
-    const response = await axios.post(
-      "https://crm-lara-mongo-7azts5zmra-uc.a.run.app/api/markers-import",
-      {
-        city: formData.city,
-        category: formData.category,
-        broadcast_tag: formData.broadcast_tag,
-        //  address: formData.address,
-        //  region: formData.region,
-        //  country: formData.country,
-        //  timezone: formData.timezone,
-        //  status: formData.status,
-        lat: formData.lat,
-        lng: formData.lng,
-        markers: JSON.stringify(data),
-        // source: "whatsapp-screenshots-import",
-      }
-    );
+      const response = await axios.post(
+        "https://crm-lara-mongo-7azts5zmra-uc.a.run.app/api/markers-import",
+        {
+          city: formData.city,
+          category: formData.category,
+          broadcast_tag: formData.broadcast_tag,
+          //  address: formData.address,
+          //  region: formData.region,
+          //  country: formData.country,
+          //  timezone: formData.timezone,
+          //  status: formData.status,
+          lat: formData.lat,
+          lng: formData.lng,
+          markers: JSON.stringify(jsonData),
+          // source: "whatsapp-screenshots-import",
+        }
+      );
 
-    // Handle the response as needed
-    console.log('API Response:', response.data);
-    // ... do something with the response ...
-  } catch (error) {
-    // Handle any errors that occurred during the API call
-    console.error('Error:', error.message);
-    // ... handle the error ...
-  }
-    
-   };
-   const handleExportToExcel = () => {
-     // Create a new workbook
-      const workbook = XLSX.utils.book_new();
-   const headers = ["Name", "Phone Number", "Category", "Location","broadcast_tag", "City", "CategoryTags", "Address", "Region", "Country", "TimeZone","Status"];
-    // Convert selecteddata to Excel format
-  const excelData = selecteddata.map((data) =>
-    data.map((item) => [
-      item?.name,
-      item?.phone,
-      formData.category,
-      `${formData.lat},${formData.lng}`,
-      formData.broadcast_tag,
-      formData.city,
-      formData.category_tags,
-      formData.address,
-      formData.region,
-      formData.country,
-      formData.timezone,
-      formData.status,
-    ])
-  );
-
-
-    // Create a new worksheet
-    const worksheet = XLSX.utils.aoa_to_sheet(excelData.flat());
-
-    // Add the worksheet to the workbook
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-
-    // Generate the Excel file and save it
-    XLSX.writeFile(workbook, 'selected_data.xlsx');
-   };
-console.log("SelectedDataaa",selecteddata)
+      // Handle the response as needed
+      console.log("API Response:", response.data);
+      // ... do something with the response ...
+    } catch (error) {
+      // Handle any errors that occurred during the API call
+      console.error("Error:", error.message);
+      // ... handle the error ...
+    }
+  };
+  console.log("SelectedDataaa", selecteddata);
   return (
     <div>
       <div className="block md:hidden">{/* <Header /> */}</div>
@@ -458,13 +346,8 @@ console.log("SelectedDataaa",selecteddata)
                 </select>
               </div>
               <div className="mt-4">
-                <div className="text-[15px]">Enter Image</div>
-                <input
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  onChange={handleImageChange}
-                />
+                <div className="text-[15px]">Select Excel File</div>
+                <input type="file" onChange={handleFileChange} />
               </div>
             </div>
           </div>
@@ -495,7 +378,7 @@ console.log("SelectedDataaa",selecteddata)
       ) : (
         <>
           <div className="flex flex-row justify-between">
-            <div>
+            {/* <div>
               {" "}
               <button
                 className="rounded-md mb-5 ml-2 text-[13px] py-1 w-[75px] md:px-2 md:w-[105px] bg-[#25ec53] hover:bg-green-400 text-white"
@@ -503,7 +386,7 @@ console.log("SelectedDataaa",selecteddata)
               >
                 Export to Excel
               </button>
-            </div>
+            </div> */}
             <div>
               <button
                 className="rounded-md mb-5 ml-2 text-[13px] py-1 w-[75px] md:px-2 md:w-[105px] bg-[#25ec53] hover:bg-green-400 text-white"
@@ -519,29 +402,23 @@ console.log("SelectedDataaa",selecteddata)
               <tr className="bg-gray-500 text-white">
                 <th className="px-4 py-2">Name</th>
                 <th className="px-4 py-2">PhoneNumber</th>
-                <th className="px-4 py-2">Broadcast Tag</th>
                 <th className="px-4 py-2">Category</th>
                 <th className="px-4 py-2">Direction</th>
               </tr>
             </thead>
             <tbody>
-              {selecteddata?.map((data, index) => (
-                <React.Fragment key={index}>
-                  {data.map((item, innerIndex) => (
-                    <tr key={item?._id} className="border-b text-center">
-                      <td className="px-4 py-2">{item?.name}</td>
-                      <td className="px-4 py-2">{item?.phone}</td>
-                      <td className="px-4 py-2">{formData.broadcast_tag}</td>
-                      <td className="px-4 py-2">{formData.category}</td>
-                      <td className="px-4 py-2">
-                        {formData.lat && formData.lng
-                          ? `${formData.lat}, ${formData.lng}`
-                          : null}
-                      </td>
-                    </tr>
-                  ))}
-                </React.Fragment>
+              {/* {selecteddata?.map((data, index) => (
+                <React.Fragment key={index}> */}
+              {selecteddata.map((item, innerIndex) => (
+                <tr key={item?._id} className="border-b text-center">
+                  <td className="px-4 py-2">{item?.Name}</td>
+                  <td className="px-4 py-2">{item?.PhoneNumber}</td>
+                  <td className="px-4 py-2">{item?.Category}</td>
+                  <td className="px-4 py-2">{item?.Location}</td>
+                </tr>
               ))}
+              {/* </React.Fragment>
+              ))} */}
             </tbody>
           </table>
         </>
@@ -550,4 +427,4 @@ console.log("SelectedDataaa",selecteddata)
   );
 };
 
-export default ImageUploader;
+export default ExcelToJsonConverter;

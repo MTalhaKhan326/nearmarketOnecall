@@ -9,6 +9,8 @@ import axios from 'axios';
 const Acceptance = (props) => {
     const navigate = useNavigate();
    const location = useLocation();
+    const [customers, setCustomers] = useState("");
+    const [revenue, setRevenue] = useState("");
  const[data, setData]= useState('')
    useEffect(() => {
      // Retrieve the data from the query parameter
@@ -18,9 +20,12 @@ const Acceptance = (props) => {
        const parsedData = JSON.parse(decodeURIComponent(queryData));
        // Use the parsedData in your component logic
        setData(parsedData);
+       setCustomers(parsedData.customers);
+       setRevenue(parsedData.revenue)
        console.log(parsedData);
      }
    }, [location.search]);
+
   //  const Total =
   //    data?.revenue * 1 +
   //    data.revenue * 2 +
@@ -39,12 +44,13 @@ const Acceptance = (props) => {
          navigate("/partner");
        }
      };
-     const customers = data?.customers;
+    
+    //  const  data?.customers;
      const customer1 = customers*2;
      const customer2 = customer1 + customers;
      const customer3 = customer2 * 2;
      const customer4 = customer3 * 2;
-     const revenue = data?.revenue * 0.10;
+     const revenues = revenue * 0.10;
      const revenue1 = (revenue *2) ; 
     const revenue2 = revenue1 + revenue; 
     const wholerev = revenue + revenue1 + revenue2;
@@ -89,11 +95,11 @@ const Acceptance = (props) => {
 
           <div className="w-full flex flex-row">
             <div className="w-[50%] ">Cutomers :</div>
-            <div className="w-[50%] pl-2">{data.customers}</div>
+            <div className="w-[50%] pl-2">{customers}</div>
           </div>
           <div className="w-full flex flex-row">
             <div className="w-[50%] ">Revenue :</div>
-            <div className="w-[50%] pl-2">{data.revenue}</div>
+            <div className="w-[50%] pl-2">{revenue}</div>
           </div>
           <div className="w-full flex flex-row">
             <div className="w-[50%] ">Days :</div>
@@ -122,7 +128,7 @@ const Acceptance = (props) => {
                     ? "3 month"
                     : data.days}
                 </td>
-                <td className="px-4 py-2">{revenue}</td>
+                <td className="px-4 py-2">{revenues}</td>
               </tr>
               <tr className="border-b">
                 <td className="px-4 py-2">{customer1}</td>

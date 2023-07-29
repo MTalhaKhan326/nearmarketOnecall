@@ -35,6 +35,9 @@ import GalleriaProperties1 from './component/modules/DropDown/GalleriaProperties
 import ImageUploader from './component/ImageUploader';
 import GalleriaLeadsListing from './component/modules/DropDown/GalleriaLeadsListing';
 import ImageUploaderr from './ImageUploader';
+import ExcelToJsonConverter from './ExcelToJsonConverter';
+import PreFabricated from './component/PreFabricated';
+import OnecallLeads from './component/modules/DropDown/OnecallLeads';
 
 function App() {
   return (
@@ -51,6 +54,11 @@ function App() {
           <Route exact path="/button" element={<RadioButtons />}></Route>
           <Route exact path="/jobs" element={<InterviewForm />}></Route>
           <Route exact path="/employerForm" element={<EmployerForm />}></Route>
+          <Route
+            exact
+            path="/converter"
+            element={<ExcelToJsonConverter />}
+          ></Route>
           <Route exact path="/partner" element={<CustomerForm />}></Route>
           <Route exact path="/acceptance" element={<Acceptance />}></Route>
           <Route
@@ -85,7 +93,8 @@ function App() {
           <Route exact path="/m" element={<MPage />}></Route>
           <Route exact path="/c" element={<CPage />}></Route>
           {/* <Route exact path="/galleria/form" element={<GalleriaForm />}></Route> */}
-          <Route exact path="/galleria/form" element={<GalleriaForm />}></Route>
+          <Route exact path="/rf" element={<GalleriaForm />}></Route>
+          <Route exact path="/pf" element={<PreFabricated />}></Route>
           <Route
             exact
             path="/galleria/t"
@@ -99,14 +108,15 @@ function App() {
           ></Route>
           <Route
             exact
-            path="/gp/leads/listing"
-            element={<GalleriaLeadsListing />}
+            path="/onecall/lead"
+            element={<OnecallLeads />}
           ></Route>
           <Route
             exact
-            path="/uploader"
-            element={<ImageUploaderr/>}
+            path="/gp/leads/listing"
+            element={<GalleriaLeadsListing />}
           ></Route>
+          <Route exact path="/uploader" element={<ImageUploaderr />}></Route>
           <Route exact path="/image" element={<ImageUploader />}></Route>
           <Route
             exact

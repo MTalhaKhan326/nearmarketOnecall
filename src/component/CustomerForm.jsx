@@ -30,7 +30,7 @@ const CustomerForm = () => {
     number: "",
     address:"",
     days:10,
-    pr:0,
+    pr:'',
     country_code: "",
     phoneNumber: "",
     category:"",
@@ -436,7 +436,7 @@ const Total =
               <div className="text-[15px]">Customer</div>
               <input
                 type="number"
-                required
+                // required
                 placeholder="Number"
                 value={formFields.number}
                 className="form-input border px-3 py-3
@@ -481,6 +481,7 @@ const Total =
               rounded-md
               focus:outline-none
               w-full h-[45px]"
+              placeholder="Potential revenue"
                 value={formFields.pr}
                 readOnly
               />
@@ -539,137 +540,7 @@ const Total =
         ) : null}
       </div>
       <Footer />
-      <ReactModal
-        isOpen={isOpen1}
-        onRequestClose={closeModal1}
-        style={{
-          content: {
-            borderRadius: "10px",
-            // height: "180px",
-            // marginTop: "180px",
-            // Set the desired height here
-          },
-          overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.5)", // Adjust the opacity and color as needed
-          },
-        }}
-      >
-        <div className=" flex flex-col">
-          <div className="w-full flex flex-row">
-            <div className="w-[50%] ">Name :</div>
-            {/* <div className="w-[50%] pl-2">{resData.name}</div> */}
-          </div>
-          <div className="w-full flex flex-row">
-            <div className="w-[50%] ">Category :</div>
-            <div className="w-[50%] pl-2">{resData.category}</div>
-          </div>
-          <div className="w-full flex flex-row">
-            <div className="w-[50%] ">Email :</div>
-            <div className="w-[50%] pl-2">{resData.email}</div>
-          </div>
-          <div className="w-full flex flex-row">
-            <div className="w-[50%] ">Gender :</div>
-            <div className="w-[50%] pl-2">{resData.gender}</div>
-          </div>
-          <div className="w-full flex flex-row">
-            <div className="w-[50%] ">Address :</div>
-            <div className="w-[50%] pl-2">{resData.address}</div>
-          </div>
-          <div className="w-full flex flex-row">
-            <div className="w-[50%] ">PhoneNumber :</div>
-            <div className="w-[50%] pl-2">{resData.phone}</div>
-          </div>
-
-          <div className="w-full flex flex-row">
-            <div className="w-[50%] ">Cutomers :</div>
-            <div className="w-[50%] pl-2">{resData.customers}</div>
-          </div>
-          <div className="w-full flex flex-row">
-            <div className="w-[50%] ">Revenue :</div>
-            <div className="w-[50%] pl-2">{resData.revenue}</div>
-          </div>
-          <div className="w-full flex flex-row">
-            <div className="w-[50%] ">Days :</div>
-            <div className="w-[50%] pl-2">{resData.days}</div>
-          </div>
-        </div>
-        <div>
-          <table className="w-full bg-white">
-            <thead>
-              <tr className="bg-gray-500 text-white">
-                <th className="px-4 py-2">Customers</th>
-                <th className="px-4 py-2">Days</th>
-                <th className="px-4 py-2">Revenue</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b">
-                <td className="px-4 py-2">{resData.customers}</td>
-
-                <td className="px-4 py-2">
-                  {resData.days >= 30
-                    ? "1 month"
-                    : resData.days >= 60
-                    ? "2 month"
-                    : resData.days >= 90
-                    ? "3 month"
-                    : resData.days}
-                </td>
-                <td className="px-4 py-2">{resData.revenue}</td>
-              </tr>
-              <tr className="border-b">
-                <td className="px-4 py-2">{resData.customers * 2}</td>
-                <td className="px-4 py-2">
-                  {resData.days * 2 >= 30
-                    ? "1 month"
-                    : resData.days * 2 >= 60
-                    ? "2 months"
-                    : resData.days * 2 >= 90
-                    ? "3 months"
-                    : resData.days * 2}
-                </td>
-                <td className="px-4 py-2">{resData.revenue * 2}</td>
-              </tr>
-              <tr className="border-b">
-                <td className="px-4 py-2">{resData.customers * 3}</td>
-                <td className="px-4 py-2">
-                  {resData.days * 3 >= 30
-                    ? "1 month"
-                    : resData.days * 3 >= 60
-                    ? "2 months"
-                    : resData.days * 3 >= 90
-                    ? "3 months"
-                    : resData.days * 3}
-                </td>
-                <td className="px-4 py-2">{resData.revenue * 3}</td>
-              </tr>
-              <tr className="border-b">
-                <td className="px-4 py-2">{resData.customers * 4}</td>
-                <td className="px-4 py-2">2 months</td>
-                <td className="px-4 py-2">{resData.revenue * 7}</td>
-              </tr>
-              <tr className="border-b">
-                <td className="px-4 py-2">{resData.customers * 5}</td>
-                <td className="px-4 py-2">3 months</td>
-                <td className="px-4 py-2">{resData.revenue * 10}</td>
-              </tr>
-              <tr className="border-b">
-                <td className="px-4 py-2">{}</td>
-                <td className="px-4 py-2">Total</td>
-                <td className="px-4 py-2">{Total}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div className="flex justify-end">
-          <button
-            className="form-button rounded-md mb-5 mt-3 text-[15px] w-[100px]  md:px-2 md:w-[130px] h-[45px] bg-[#009bfb] hover:bg-lightBlue-600 text-white"
-            onClick={() => sendSms(resData)}
-          >
-            Submit Request
-          </button>
-        </div>
-      </ReactModal>
+     
     </div>
   );
 };
