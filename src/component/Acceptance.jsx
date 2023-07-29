@@ -9,8 +9,8 @@ import axios from 'axios';
 const Acceptance = (props) => {
     const navigate = useNavigate();
    const location = useLocation();
-    const [customers, setCustomers] = useState("");
-    const [revenue, setRevenue] = useState("");
+    const [customers, setCustomers] = useState(0);
+    const [revenue, setRevenue] = useState(0);
  const[data, setData]= useState('')
    useEffect(() => {
      // Retrieve the data from the query parameter

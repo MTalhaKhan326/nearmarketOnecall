@@ -154,7 +154,7 @@ const Total =
     console.log({
       email: formFields.email,
       phone: formFields.phoneNumber,
-      tel_country_code: formFields.phoneNumber.replace("+", "").slice(0, 2),
+      // tel_country_code: formFields.phoneNumber.replace("+", "").slice(0, 2),
       name: formFields.name,
       days: formFields.days,
       address:formFields.address,
@@ -436,7 +436,7 @@ const Total =
               <div className="text-[15px]">Customer</div>
               <input
                 type="number"
-                // required
+                required
                 placeholder="Number"
                 value={formFields.number}
                 className="form-input border px-3 py-3
