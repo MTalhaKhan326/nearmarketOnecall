@@ -20,7 +20,7 @@ const CustomerForm = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState();
   const [potentialRevenue, setPotentialRevenue]= useState(null);
-  console.log(potentialRevenue)
+  // console.log(potentialRevenue)
   const [posted, setPosted] = useState("");
   const [error, setError] = useState("");
   const [formFields, setFormFields] = useState({
@@ -181,18 +181,17 @@ const Total =
         &customers=${formFields.number}&gender=${formFields.gender}`
       );
       console.log("Resulttt", result.data.data);
-    SetresData(result.data.data)
+    // SetresData(result.data.data)
     if (result.status === 200) {
       // <Acceptance data={result.data.data} />;
       window.location.href = `/acceptance?data=${encodeURIComponent(
         JSON.stringify(result.data.data)
       )}`;
-      // setPosted(1);
+      setPosted(1);
       // navigate("/acceptance");
-     
     }
   };
-  console.log("ResponseData", resData)
+  // console.log("ResponseData", resData)
 
   return (
     <div>

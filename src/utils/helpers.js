@@ -84,3 +84,11 @@ export function isValidJSON(string) {
     }
     return true;
 }
+
+export function isEmail(input) {
+    // Regular expression pattern to check if the input is in email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    // Test the input against the regex pattern and return true if it matches, false otherwise
+    return emailRegex.test(input);
+}

@@ -2,7 +2,8 @@ import ReactModal from "react-modal";
 
 function SimpleModal({ 
     isOpen = false,
-    onClose = null 
+    onClose = null,
+    children
 }) {
     const customStyles = {
         content: {
@@ -20,11 +21,7 @@ function SimpleModal({
             style={customStyles}
             onRequestClose={onClose}
         >
-            {/* <div className="flex flex-col">
-            <div className="mx-4">
-                <Popup />
-            </div>
-            </div> */}
+            { children }
         </ReactModal>
     );
 }

@@ -38,6 +38,9 @@ import ImageUploaderr from './ImageUploader';
 import ExcelToJsonConverter from './ExcelToJsonConverter';
 import PreFabricated from './component/PreFabricated';
 import OnecallLeads from './component/modules/DropDown/OnecallLeads';
+import PartnerForm from './component/modules/Partner/PartnerForm.jsx';
+import ConfirmSubmission from './component/modules/Partner/ConfirmSubmission.jsx';
+import PartnerFormProvider from './component/modules/Partner/PartnerFormProvider.jsx';
 
 function App() {
   return (
@@ -123,6 +126,13 @@ function App() {
             path="/businessRequest/:userId"
             element={<BusinessRequest />}
           ></Route>
+
+          <Route exact path="/become-partner" element={<PartnerFormProvider>
+            <PartnerForm />
+          </PartnerFormProvider>}></Route>
+          <Route exact path="/become-partner/confirm" element={<PartnerFormProvider>
+            <ConfirmSubmission />
+          </PartnerFormProvider>}></Route>
           <Route path="*" element={<NoMatch />}></Route>
         </Routes>
       </BrowserRouter>
