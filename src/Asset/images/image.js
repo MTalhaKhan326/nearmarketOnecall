@@ -24,6 +24,15 @@ import pageNotFound from "./file-error-svgrepo-com.svg"
 import gallerialogo from "./galleria-logo-png.png"
 import edit from "./edit.png"
 import del from "./delete.png"
+import ph1 from "./ph1.png"
+import ph2 from "./ph2.png"
+import ph3 from "./ph3.png"
+import ph4 from "./ph4.png"
+import ph5 from "./ph5.png"
+import ph6 from "./ph6.png"
+import ph7 from "./ph7.png"
+import ph8 from "./ph8.png"
+
 
 
 export const AppImages = {
@@ -52,5 +61,13 @@ export const AppImages = {
     close,
     upload,
     pageNotFound,
-    phone2
+    phone2,
+    ph1,
+    ph2,
+    ph3,
+    ph4,
+    ph5,
+    ph6,
+    ph7,
+    ph8,
 }

@@ -41,6 +41,7 @@ import OnecallLeads from './component/modules/DropDown/OnecallLeads';
 import PartnerForm from './component/modules/Partner/PartnerForm.jsx';
 import ConfirmSubmission from './component/modules/Partner/ConfirmSubmission.jsx';
 import PartnerFormProvider from './component/modules/Partner/PartnerFormProvider.jsx';
+import Mobileshop from './component/Mobileshop';
 
 function App() {
   return (
@@ -121,6 +122,7 @@ function App() {
           ></Route>
           <Route exact path="/uploader" element={<ImageUploaderr />}></Route>
           <Route exact path="/image" element={<ImageUploader />}></Route>
+          <Route exact path="/mobileshop" element={<Mobileshop />}></Route>
           <Route
             exact
             path="/businessRequest/:userId"
