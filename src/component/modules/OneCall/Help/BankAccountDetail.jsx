@@ -15,7 +15,7 @@ const BankAccountDetail = ({ details, sectionTitle = null }) => {
       {sectionTitle && <span className="text-sm mb-1">{sectionTitle}</span>}
       <div className="text-primaryText">
         <SingleRow heading={'Account Title'} value={details.title} />
-        <SingleRow heading={'Account No'} value={details.accNo} />
+        {details.accNo && <SingleRow heading={'Account No'} value={details.accNo} />}
         {details.bankName && <SingleRow heading={'Bank Name'} value={details.bankName} /> }
         {details.branchCode && <SingleRow heading={'Branch Code'} value={details.branchCode} /> }
         {details.iban && <SingleRow heading={'IBAN'} value={details.iban} /> }

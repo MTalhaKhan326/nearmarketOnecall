@@ -19,10 +19,18 @@ function BillingTabContent() {
                 <AccordionItem>
                     <AccordionItemHeading>
                         <AccordionItemButton>
-                            Bank Account Details
+                            Bank Account
                         </AccordionItemButton>
                     </AccordionItemHeading>
                     <AccordionItemPanel>
+                        <BankAccountDetail details={{
+                            id: 2,
+                            title: "ONE CALL",
+                            bankName: "Sonehri Bank",
+                            branchCode: "DHA Phase 5",
+                            iban: "PK81SONE002522011678794",
+                        }} />         
+                        <h2 className="mt-4 mb-2 border-b-[1px] font-semibold">Other Authorized Bank Account:</h2>
                         <BankAccountDetail details={details} />         
                     </AccordionItemPanel>
                 </AccordionItem>
