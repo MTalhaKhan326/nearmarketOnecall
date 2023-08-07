@@ -32,7 +32,18 @@ import ph5 from "./ph5.png"
 import ph6 from "./ph6.png"
 import ph7 from "./ph7.png"
 import ph8 from "./ph8.png"
-
+import ph9 from "./ph9.png"
+import ph10 from "./ph10.png"
+import ph11 from "./ph11.png"
+import ph12 from "./ph12.png"
+import ph13 from "./ph13.png"
+import ph14 from "./ph14.png"
+import ph15 from "./ph15.png"
+import ph16 from "./ph16.png"
+import ph17 from "./ph17.png"
+import ph18 from "./ph18.png"
+import ph19 from "./ph19.png"
+import ph20 from "./ph20.png"
 
 
 export const AppImages = {
@@ -70,4 +81,16 @@ export const AppImages = {
     ph6,
     ph7,
     ph8,
+    ph9,
+    ph10,
+    ph11,
+    ph12,
+    ph13,
+    ph14,
+    ph15,
+    ph16,
+    ph17,
+    ph18,
+    ph19,
+    ph20,
 }
