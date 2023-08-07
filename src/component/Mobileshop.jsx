@@ -50,7 +50,7 @@ async function log(tag, value) {
       
           <div
             className='mt-[3%] bg-[#38bdf8] w-[40%] h-[40px] cursor-pointer py-[12px] text-[12px] text-white text-center rounded-md'
-            onClick={redirectToWhatsApp('Please send me best offers for mobile phone within 3,000 budget')}
+            onClick={()=>redirectToWhatsApp('Please send me best offers for mobile phone within 3,000 budget')}
           >
             Find me Best Offers
           </div>
@@ -77,7 +77,7 @@ async function log(tag, value) {
           {/* Add the onClick event to the button */}
           <div
             className='mt-[3%] bg-[#38bdf8] w-[40%] h-[40px] cursor-pointer py-[12px] text-[12px] text-white text-center rounded-md'
-            onClick={redirectToWhatsApp('Please send me best offers for mobile phone within 10,000 budget')}
+            onClick={()=>redirectToWhatsApp('Please send me best offers for mobile phone within 10,000 budget')}
           >
             Find me Best Offers
           </div>
