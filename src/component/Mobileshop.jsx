@@ -7,7 +7,7 @@ import axios from 'axios';
 
 
 const Mobileshop = () => {
-async function log(tag, value) {
+    async function log(tag, value) {
      return axios.post(
        "https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/log",
        {
@@ -23,11 +23,13 @@ async function log(tag, value) {
    }
 
   const redirectToWhatsApp = (message) => {
-     log('oc_clicked_on_whatsapp_btn_mobileshop')
     const phoneNumber = '923095557566';
-
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-  
+    log('oc_clicked_on_whatsapp_btn_mobileshop', {
+      phone: phoneNumber,
+      message,
+      url
+    })
     window.location.href = url;
   };
   
