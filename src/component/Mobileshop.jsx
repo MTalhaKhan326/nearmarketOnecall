@@ -7,31 +7,42 @@ import axios from 'axios';
 
 
 const Mobileshop = () => {
-     async function log(tag, value) {
-          return axios.post(
-            "https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/log",
-            {
-              tag,
-              value: JSON.stringify({
-                ...value,
-                localTime: new Date(),
-                link: window.location.href,
-              }),
-              decodeJson: "true",
-            }
-          );
-        }
+async function log(tag, value) {
+     return axios.post(
+       "https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/log",
+       {
+         tag,
+         value: JSON.stringify({
+           ...value,
+           localTime: new Date(),
+           link: window.location.href,
+         }),
+         decodeJson: "true",
+       }
+     );
+   }
 
   const redirectToWhatsApp = () => {
      log('oc_clicked_on_whatsapp_btn_mobileshop')
-    const phoneNumber = '03095557566';
+    const phoneNumber = '923095557566';
 
-    const message = 'Hello, I am interested in the best offers.';
+    const message = 'Please send me best offers for mobile phone within 3,000 budget';
 
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   
     window.location.href = url;
   };
+
+  const redirectToWhatsApp2 = () => {
+    log('oc_clicked_on_whatsapp_btn_mobileshop')
+   const phoneNumber = '923095557566';
+
+   const message = 'Please send me best offers for mobile phone within 10,000 budget.';
+
+   const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+ 
+   window.location.href = url;
+ };
 
   
   return (
@@ -80,7 +91,7 @@ const Mobileshop = () => {
           {/* Add the onClick event to the button */}
           <div
             className='mt-[3%] bg-[#38bdf8] w-[40%] h-[40px] cursor-pointer py-[12px] text-[12px] text-white text-center rounded-md'
-            onClick={redirectToWhatsApp}
+            onClick={redirectToWhatsApp2}
           >
             Find me Best Offers
           </div>
