@@ -53,7 +53,7 @@ function OnecallLeads() {
         });
     }
 
-    log("gp_page_load");
+    log("oc_lead_page_load");
   }, []);
 
   const handleClickOnCallNow = (e) => {
@@ -61,11 +61,11 @@ function OnecallLeads() {
       return;
     }
     window.location.href = `tel:${data.query.from}`;
-    log("gp_clicked_on_call_now", { phone: data?.query?.from });
+    log("oc_lead_clicked_on_call_now", { phone: data?.query?.from });
   };
   async function handleClickOnUnsubscribe(e) {
     setIsUnsubRequestInProgress(true);
-    log("gp_clicked_on_unsub_btn");
+    log("oc_lead_clicked_on_unsub_btn");
     setTimeout(() => {
       setShowUnsubBtn(false);
       setIsUnsubRequestInProgress(false);
