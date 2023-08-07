@@ -26,11 +26,13 @@ async function log(tag, value) {
    }
 
   const redirectToWhatsApp = (message) => {
-     log('oc_clicked_on_whatsapp_btn_mobileshop')
     const phoneNumber = '923095557566';
-
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-  
+    log('oc_clicked_on_whatsapp_btn_mobileshop', {
+      phone: phoneNumber,
+      url,
+      message 
+    })
     window.location.href = url;
   };
   

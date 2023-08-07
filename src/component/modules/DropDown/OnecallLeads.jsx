@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import ReactModal from "react-modal";
 import { AppImages } from "../../../Asset/images/image";
-import GalleriaHeader from "../../GalleriaHeader";
-import GalleriaFooter from "../../GalleriaFooter";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import moment from "moment";
