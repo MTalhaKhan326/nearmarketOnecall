@@ -19,7 +19,7 @@ function BillingTabContent() {
                 <AccordionItem>
                     <AccordionItemHeading>
                         <AccordionItemButton>
-                            Bank Account
+                            Bank Accounts
                         </AccordionItemButton>
                     </AccordionItemHeading>
                     <AccordionItemPanel>
