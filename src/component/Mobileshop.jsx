@@ -167,7 +167,7 @@ async function log(tag, value) {
       </div>
 
       <div className='border-[1px]'></div>
-      <div className='mt-[8%]'>
+      <div className='mt-[8%] mb-[2%]'>
         <Footer1 />
       </div>
     </div>
