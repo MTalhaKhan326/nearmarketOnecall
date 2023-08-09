@@ -8,6 +8,7 @@ const fields = {
   address: null,
   businessCat: null,
   customers: null,
+  // revenue: null,
   days: 10
 }
 

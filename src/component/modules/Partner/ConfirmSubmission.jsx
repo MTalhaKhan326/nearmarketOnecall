@@ -4,6 +4,7 @@ import { PartnerFormContext } from "./PartnerFormProvider.jsx";
 import { formatNumberAsReadable, titleCase } from "../../../utils/helpers.js";
 import { AppImages } from "../../../Asset/images/image.js";
 import SimpleModal from "../../basic/SimpleModal.jsx";
+import axios from "axios";
 
 function ConfirmSubmission() {
   const partnerFormContext = useContext(PartnerFormContext)
@@ -13,19 +14,20 @@ function ConfirmSubmission() {
   const navigate = useNavigate()
 
   if(!data) {
-    return <Navigate to="/become-partner" />
+    return <Navigate to="/partner" />
   }
 
   const fields = [
     { label: 'Name', value: data.full_name },
     { label: 'Gender', value: titleCase( data.gender ) },
     { label: 'Email', value: data.email },
-    { label: 'Phone', value: data.phone },
+    { label: 'Phone', value: 0+data.phone },
     { label: 'Address', value: data.address },
     { label: 'Business Category', value: partnerFormContext.businessCategories.find(i => i.value === data.businessCat )?.label ?? "--"},
     { label: 'Customers', value: data.customers },
     { label: 'Days', value: data.days },
   ]
+  console.log("Fieldsss",fields)
 
   const PACKAGE_PRICE = 1950
   const RATIO = 0.1
@@ -74,16 +76,27 @@ function ConfirmSubmission() {
     }
     return res + " month" + (res === 1 ? "" : "s")
   }
+  let phonenumber = 0 + data.phone;
+  console.log("PhoneNumber",phonenumber)
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     setIsLoading(true)
-    setTimeout(() => {
-      setIsLoading(false)
-      setModalSettings(old => ({...old, isOpen: true}))
-      // partnerFormContext.hydrate()
-      // navigate('/become-partner')
-    }, 3000)
+    const result = await axios.post(
+         `https://bdfqeanazekq5kvfeebnua4h2m0guswz.lambda-url.eu-west-1.on.aws/customer/message?email=${data.email}&phone=${phonenumber}&revenue=${data.full_name}`
+       );
+       console.log("Resulttt", result);
+       if (result.status === 200) {
+        //  closeModal1();
+        setIsLoading(false);
+         navigate("/partner");
+       }
+    // setTimeout(() => {
+    //   setIsLoading(false)
+    //   setModalSettings(old => ({...old, isOpen: true}))
+    //   // partnerFormContext.hydrate()
+    //   // navigate('/become-partner')
+    // }, 3000)
   }
   
   return (  

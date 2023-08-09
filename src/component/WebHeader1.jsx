@@ -22,11 +22,11 @@ const WebHeader1 = () => {
     <div className="w-full p-[2vw] flex flex-row">
       <div className="w-full flex flex-row justify-between">
         <Link to={`/`}>
-          <div className="w-[150px] sm:w-[40%] bg-white rounded-3xl sm:rounded-3xl">
+          <div className="w-[300px] bg-white rounded-3xl sm:rounded-3xl">
             <img src={AppImages.logo} alt="" />
           </div>
         </Link>
-        <div className="text-[#919191] text-[10px] mt-[14px] mr-[15px]">
+        <div className="text-[#919191] text-[10px] mt-[14px] mr-[5px]">
           {currentDate}
         </div>
       </div>

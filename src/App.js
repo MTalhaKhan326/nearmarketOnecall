@@ -63,8 +63,16 @@ function App() {
             path="/converter"
             element={<ExcelToJsonConverter />}
           ></Route>
-          <Route exact path="/partner" element={<CustomerForm />}></Route>
-          <Route exact path="/acceptance" element={<Acceptance />}></Route>
+          <Route
+            exact
+            path="/become-partner"
+            element={<CustomerForm />}
+          ></Route>
+          <Route
+            exact
+            path="/become-partner/confirm"
+            element={<Acceptance />}
+          ></Route>
           <Route
             exact
             path="/post/create"
@@ -110,11 +118,7 @@ function App() {
             path="/gp/lead"
             element={<GalleriaProperties1 />}
           ></Route>
-          <Route
-            exact
-            path="/onecall/lead"
-            element={<OnecallLeads />}
-          ></Route>
+          <Route exact path="/onecall/lead" element={<OnecallLeads />}></Route>
           <Route
             exact
             path="/gp/leads/listing"
@@ -129,12 +133,24 @@ function App() {
             element={<BusinessRequest />}
           ></Route>
 
-          <Route exact path="/become-partner" element={<PartnerFormProvider>
-            <PartnerForm />
-          </PartnerFormProvider>}></Route>
-          <Route exact path="/become-partner/confirm" element={<PartnerFormProvider>
-            <ConfirmSubmission />
-          </PartnerFormProvider>}></Route>
+          <Route
+            exact
+            path="/partner"
+            element={
+              <PartnerFormProvider>
+                <PartnerForm />
+              </PartnerFormProvider>
+            }
+          ></Route>
+          <Route
+            exact
+            path="/acceptance"
+            element={
+              <PartnerFormProvider>
+                <ConfirmSubmission />
+              </PartnerFormProvider>
+            }
+          ></Route>
           <Route path="*" element={<NoMatch />}></Route>
         </Routes>
       </BrowserRouter>

@@ -7,6 +7,7 @@ import moment from "moment";
 import Loading from "../../basic/Loading.jsx";
 import WebHeader1 from "../../WebHeader1";
 import Footer1 from "../../Footer1";
+import ModalImage from "react-modal-image";
 
 function OnecallLeads() {
   const isDevEnv = false;
@@ -22,7 +23,10 @@ function OnecallLeads() {
   const [isOpen, setIsOpen] = useState(false);
   const openModal = useCallback(() => setIsOpen(true), []);
   const closeModal = useCallback(() => setIsOpen(false), []);
-
+ 
+useEffect(() => {
+  document.title = "OneCall";
+}, []);
   useEffect(() => {
     if (!marker_id && !query_id) {
       setErrorFetchingData({ message: "Invalid url" });
@@ -133,7 +137,14 @@ function OnecallLeads() {
           </>
         )}
       </main>
-      <Footer1 />
+      <Footer1
+        onAppStoreClick={() =>
+          log("oc_lead_clicked_on_appstore_btn", { store: "ios" })
+        }
+        onGooglePlayClick={() =>
+          log("oc_lead_clicked_on_appstore_btn", { store: "android" })
+        }
+      />
       {data?.query && data?.marker && showUnsubBtn && (
         <div>
           <div className="text-[11px] text-[#2b2b2b] mt-[6px] ml-2 ">
@@ -209,6 +220,15 @@ function Error({ message }) {
 }
 
 function SingleQueryMessage({ message, date }) {
+   const [isModalOpen, setIsModalOpen] = useState(false);
+
+   const handleImageClick = () => {
+     setIsModalOpen(true);
+   };
+
+   const handleModalClose = () => {
+     setIsModalOpen(false);
+   };
   let content = "";
   switch (message.type) {
     case "text":
@@ -221,12 +241,16 @@ function SingleQueryMessage({ message, date }) {
     case "image":
       content = (
         <div>
-          <img
-            src={message.content}
-            alt="lead image"
-            className="max-h-[100px]"
+          <ModalImage
+            className="h-[100px]"
+            small={message.content}
+            large={message.content}
+            onClose={handleModalClose}
+            isOpen={isModalOpen}
+            hideDownload={true}
           />
         </div>
+    
       );
       break;
     case "audio":
@@ -254,6 +278,7 @@ function SingleQueryMessage({ message, date }) {
       <div className="text-[10px] mt-[25px] text-opacity-80 mb-[8px] text-[#5C5C5C] ">
         {moment(date).format("MMMM D, YYYY h:mm A")}
       </div>
+      
     </div>
   );
 }
