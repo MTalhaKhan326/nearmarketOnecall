@@ -42,6 +42,7 @@ import PartnerForm from './component/modules/Partner/PartnerForm.jsx';
 import ConfirmSubmission from './component/modules/Partner/ConfirmSubmission.jsx';
 import PartnerFormProvider from './component/modules/Partner/PartnerFormProvider.jsx';
 import Mobileshop from './component/Mobileshop';
+import OnecallOffer from './component/modules/DropDown/OnecallOffer';
 
 function App() {
   return (
@@ -119,6 +120,7 @@ function App() {
             element={<GalleriaProperties1 />}
           ></Route>
           <Route exact path="/onecall/lead" element={<OnecallLeads />}></Route>
+          <Route exact path="/onecall/offer" element={<OnecallOffer />}></Route>
           <Route
             exact
             path="/gp/leads/listing"
