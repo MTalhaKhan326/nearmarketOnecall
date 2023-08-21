@@ -8,8 +8,9 @@ import Loading from "../../basic/Loading.jsx";
 import WebHeader1 from "../../WebHeader1";
 import Footer1 from "../../Footer1";
 import ModalImage from "react-modal-image";
+import Iframe from "../../basic/Iframe";
 
-function OnecallOffer() {
+function OnecallYt() {
   const isDevEnv = false;
   const [searchParams] = useSearchParams();
   const marker_id = searchParams.get("marker_id");
@@ -27,56 +28,21 @@ function OnecallOffer() {
   useEffect(() => {
     document.title = "OneCall";
   }, []);
-  useEffect(() => {
-    if (!marker_id && !query_id) {
-      setErrorFetchingData({ message: "Invalid url" });
-    } else if (marker_id && query_id && !data) {
-      setIsFetchingData(true);
-      axios
-        .get(
-          `https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/oc92/get-query-details?query_id=${query_id}&marker_id=${marker_id}`
-        )
-        .then((res) => {
-          if (res.data.status === 200) {
-            setData(res.data.data);
-            markLeadAsRead();
-          } else {
-            if (res.data.isOperationalError) {
-              setErrorFetchingData({ message: "Something went wrong" });
-            } else {
-              setErrorFetchingData({
-                message: res.data.message ?? "Something went wrong",
-              });
-            }
-          }
-        })
-        .finally(() => {
-          setIsFetchingData(false);
-        });
-    }
-
-    log("oc_offer_page_load");
-  }, []);
-
-  const handleClickOnCallNow = (e) => {
-    if (!data.query?.from) {
-      return;
-    }
-    window.location.href = `tel:${data.query.from}`;
-    log("oc_offer_clicked_on_call_now", { phone: data?.query?.from });
-  };
+ 
+ useEffect(() => {
+   log("oc_offer_page_load_youtubeVideoes");
+ }, []);
+ 
   async function handleClickOnUnsubscribe(e) {
     setIsUnsubRequestInProgress(true);
-    log("oc_offer_clicked_on_unsub_btn");
+    
     setTimeout(() => {
       setShowUnsubBtn(false);
       setIsUnsubRequestInProgress(false);
       closeModal();
     }, 2000);
   }
-
   async function log(tag, value) {
-    if (isDevEnv) return null;
     return axios.post(
       "https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/log",
       {
@@ -85,79 +51,110 @@ function OnecallOffer() {
           ...value,
           localTime: new Date(),
           link: window.location.href,
-          ref: "oc-offer",
-          marker_id,
-          query_id,
         }),
         decodeJson: "true",
       }
     );
   }
-
-  async function markLeadAsRead() {
-    return axios.post(
-      "https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/oc92/general-request?action=update-lead-as-read",
-      {
-        marker_id,
-        query_id,
-      }
-    );
-  }
-
+ const redirectToWhatsApp = (message) => {
+   const phoneNumber = "923095557566";
+   const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+     message
+   )}`;
+   log("oc_clicked_on_whatsapp_btn_youtubeVideoes", {
+     phone: phoneNumber,
+     url,
+     message,
+   });
+   window.location.href = url;
+ };
+ 
+const videos = [
+  {
+    id: 1,
+    title: "How to use One Call App?",
+    url: "https://www.youtube.com/embed/Hy6mY8eQEKk",
+  },
+  {
+    id: 2,
+    title: "No More Interview for USA VISA?",
+    url: "https://www.youtube.com/embed/k0lvm8h5IAo",
+  },
+  {
+    id: 3,
+    title: "How to Plan your trip?",
+    url: "https://www.youtube.com/embed/UbPols2QCnw",
+  },
+  {
+    id: 4,
+    title: "B1/B2 USA VISA?",
+    url: "https://www.youtube.com/embed/1JDp1kLF5R8",
+  },
+  {
+    id: 5,
+    title: "USA VISA Interview?",
+    url: "https://www.youtube.com/embed/Oex6SryukWw",
+  },
+  {
+    id: 6,
+    title: "USA VISA Fee Increase?",
+    url: "https://www.youtube.com/embed/vDA68d6OGFg",
+  },
+];
   return (
     <>
       <WebHeader1 />
       <main>
-        {isFetchingData ? (
-          <Loading />
-        ) : errorFetchingData || !data ? (
-          <Error
-            message={errorFetchingData?.message ?? "Something went wrong"}
-          />
-        ) : (
-          <>
-            <div className="flex flex-row justify-end w-full my-2">
-              <button
-                className="bg-[#6ACB00] hover:bg-[#77d711] hover:text-white  text-white text-[10px] w-[56px] h-[25px] mt-[17px] mx-[27.6px] border-[1.5px] py-[1.5px] rounded"
-                onClick={handleClickOnCallNow}
-              >
-                Call Now
-              </button>
+        {videos.map((video, index) => (
+          <div key={index}>
+            <div>
+              {/* <span className="px-5 text-[15px]">{video.title}</span> */}
+              <Iframe
+                videoUrl={video.url}
+                props={{
+                  allow:
+                    "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+                  // allowfullscreen: 'allowFullScreen'
+                }}
+              />
             </div>
+            <div className="flex justify-end color ">
+              {/*onClick*/}
+              <div
+                className="mt-[3%] bg-[#59e759] hover:bg-[#3e873e] flex flex-row w-[35%] h-[40px] mx-3 cursor-pointer py-[12px] text-white text-center rounded-md"
+                onClick={() => redirectToWhatsApp("")}
+              >
+                <div className="w-[30%] pl-1">
+                  <img
+                    src={AppImages.whatsappIcon}
+                    className="pl-2 h-full flex justify-center"
+                    alt=""
+                    srcset=""
+                  />
+                </div>
 
-            {/* messages wrapper */}
-            {data.query.query_messages.map((message, index) => (
-              <div key={"qm-" + index}>
-                <SingleQueryMessage
-                  message={message}
-                  date={data.query.createdAt}
-                />
+                <div className="w-[70%] text-left font-bold text-[12px] pr-2">
+                  Contact NOW
+                </div>
               </div>
-            ))}
-          </>
-        )}
+            </div>
+          </div>
+        ))}
       </main>
-      <Footer1
-        onAppStoreClick={() =>
-          log("oc_lead_clicked_on_appstore_btn", { store: "ios" })
-        }
-        onGooglePlayClick={() =>
-          log("oc_lead_clicked_on_appstore_btn", { store: "android" })
-        }
-      />
-      {data?.query && data?.marker && showUnsubBtn && (
-        <div>
-          <div className="text-[11px] text-[#2b2b2b] mt-[6px] ml-2 ">
-            I do not want to grown my business or not interested otherwise.
-          </div>
-          <div
-            className="text-center text-[#FF0202] font-semibold underline text-[14px] cursor-pointer"
-            onClick={(e) => openModal()}
-          >
-            Unsubscribe
-          </div>
+      <Footer1 />
+      {/* {data?.query && data?.marker && showUnsubBtn && ( */}
+      <div>
+        <div className="text-[11px] text-[#2b2b2b] mt-[6px] ml-2 ">
+          I do not want to grown my business or not interested otherwise.
         </div>
-      )}
+        <div
+          className="text-center text-[#FF0202] font-semibold underline text-[14px] cursor-pointer"
+          onClick={(e) => openModal()}
+        >
+          Unsubscribe
+        </div>
+      </div>
+      {/* )} */}
 
       <ReactModal
         isOpen={isOpen}
@@ -178,7 +175,7 @@ function OnecallOffer() {
             Confirmation !
           </div>
           <div className="text-[#2b2b2b] text-[14px] ml-2 mt-4 font-semibold">
-            Are you sure you want to Unsubscribe Galleria Properties ?
+            Are you sure you want to Unsubscribe OneCall App ?
           </div>
           <div className="flex flex-row justify-between">
             {/* <div className="flex items-center justify-center">OK</div> */}
@@ -281,4 +278,4 @@ function SingleQueryMessage({ message, date }) {
   );
 }
 
-export default OnecallOffer;
+export default OnecallYt;

@@ -44,9 +44,11 @@ import ph17 from "./ph17.png"
 import ph18 from "./ph18.png"
 import ph19 from "./ph19.png"
 import ph20 from "./ph20.png"
+import whatsappIcon from "./whatsappIcon.png"
 
 
 export const AppImages = {
+    whatsappIcon,
     gallerialogo,
     loading,
     edit,

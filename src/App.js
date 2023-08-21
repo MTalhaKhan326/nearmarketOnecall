@@ -43,6 +43,7 @@ import ConfirmSubmission from './component/modules/Partner/ConfirmSubmission.jsx
 import PartnerFormProvider from './component/modules/Partner/PartnerFormProvider.jsx';
 import Mobileshop from './component/Mobileshop';
 import OnecallOffer from './component/modules/DropDown/OnecallOffer';
+import OnecallYt from './component/modules/DropDown/OnecallYt';
 
 function App() {
   return (
@@ -73,6 +74,11 @@ function App() {
             exact
             path="/become-partner/confirm"
             element={<Acceptance />}
+          ></Route>
+          <Route
+            exact
+            path="/yt"
+            element={<OnecallYt />}
           ></Route>
           <Route
             exact

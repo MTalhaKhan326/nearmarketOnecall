@@ -22,7 +22,7 @@ const WebHeader1 = () => {
     <div className="w-full p-[2vw] flex flex-row">
       <div className="w-full flex flex-row justify-between">
         <Link to={`/`}>
-          <div className="w-[300px] bg-white rounded-3xl sm:rounded-3xl">
+          <div className="w-[280px] bg-white rounded-3xl sm:rounded-3xl">
             <img src={AppImages.logo} alt="" />
           </div>
         </Link>
