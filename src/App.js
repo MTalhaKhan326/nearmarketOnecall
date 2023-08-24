@@ -44,6 +44,7 @@ import PartnerFormProvider from './component/modules/Partner/PartnerFormProvider
 import Mobileshop from './component/Mobileshop';
 import OnecallOffer from './component/modules/DropDown/OnecallOffer';
 import OnecallYt from './component/modules/DropDown/OnecallYt';
+import GalleriaRequestForm from './component/modules/Galleria/RequestForm.jsx';
 
 function App() {
   return (
@@ -159,6 +160,7 @@ function App() {
               </PartnerFormProvider>
             }
           ></Route>
+          <Route path="/galleria/request" element={<GalleriaRequestForm />}></Route>
           <Route path="*" element={<NoMatch />}></Route>
         </Routes>
       </BrowserRouter>

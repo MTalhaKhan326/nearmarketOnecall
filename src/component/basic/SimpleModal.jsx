@@ -14,6 +14,9 @@ function SimpleModal({
           marginRight: "-50%",
           transform: "translate(-50%, -50%)",
         },
+        overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.5)", // Adjust the opacity and color as needed
+        },
     };
     return (  
         <ReactModal

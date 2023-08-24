@@ -1,0 +1,287 @@
+import { useEffect, useRef, useState } from "react";
+import { AppImages } from "../../../Asset/images/image.js";
+import { PakistanCities } from "../../../utils/data/pk-cities.js";
+import SimpleModal from "../../basic/SimpleModal.jsx";
+import axios from "axios";
+
+function GalleriaRequestForm() {
+  const [viewPurpose, setViewPurpose] = useState(null)
+  const fields = {
+    type: null,
+    plotSize: null,
+    service: null,
+    location: null,
+    name: null,
+    phone: null,
+    city: null,
+  }
+  const [formFields, setFormFields] = useState(fields)
+  const [fieldErrors, setFieldErrors] = useState({})
+  const [isLoading, setIsLoading] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const fieldsStartRef = useRef(null)
+
+  function onSubmit(e) {
+    e.preventDefault()
+    setFieldErrors({})
+
+    const errors = {}
+    if(!formFields.type) {
+      errors.type = "This field is required"
+    }
+    if(!formFields.plotSize) {
+      errors.plotSize = "This field is required"
+    }
+    if(!formFields.service) {
+      errors.service = "This field is required"
+    }
+    if(!formFields.location) {
+      errors.location = "This field is required"
+    }
+    if(!formFields.name) {
+      errors.name = "This field is required"
+    }
+    if(!formFields.phone) {
+      errors.phone = "This field is required"
+    }
+    if(!formFields.city) {
+      errors.city = "This field is required"
+    }
+
+    if(Object.keys(errors).length) {
+      scrollToTop()
+      setFieldErrors(errors)
+      return;
+    }
+
+    setIsLoading(true)
+    axios.post("https://realestate.onecallapp.com/api/save-lead-queue", {
+      name: formFields.name,
+      phone: formFields.phone,
+      city: formFields.city,
+      location: formFields.location,
+      plot_size: formFields.plotSize,
+      services: formFields.service,
+      property_type: formFields.type,
+    }).then(res => {
+      setFormFields(fields)
+      setFieldErrors({})
+      setIsModalOpen(true)
+    }).catch(e => {
+      console.log(e)
+    }).finally(() => {
+      setIsLoading(false)
+    })
+  }
+
+  function onViewProjects() {
+    axios.post("https://realestate.onecallapp.com/api/project_view")
+    window.open("https://instagram.com/galleriadesigns.com.pk?igshid=OGQ5ZDc2ODk2ZA==", "_blank")
+  }
+
+  function scrollToTop() {
+    fieldsStartRef?.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  useEffect(() => {
+    document.body.classList.add("bg-slate-200")
+    document.title = "Lead Generation"
+  }, [])
+
+  return (  
+    <>
+      <div className="block mx-auto mt-24 mb-16 px-4 bg-slate-200">
+        <header className="border-2 rounded-lg bg-white shadow-md">
+          <div className="relative">
+            <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-full bg-white">
+              <img src={AppImages.galleriaDesignsLogo} className="object-cover object-center w-[150px] h-[150px] rounded-full border-[1px]" />
+            </div>
+          </div>
+          <div className="mt-16 text-center p-4">
+            <h1 className="text-gray-600 text-[24px] my-2">GALLERIA DESIGNS</h1>
+            <h2 className="font-bold text-[18px] my-2">At Galleria Deisgns, We give Life to Your Dreams</h2>
+            <p className="my-4">Galleria Designs is Full service Architectural, Construction, Interior Design, Furniture and landscaping firm.</p>
+            <p className="text-[12px] text-slate-600">IF YOU HAVE CUSTOM REQUIEMENT FEEL FREE TO LEAVE YOUR CONTACT DETAILS AND OUR TEAM WILL GET IN TOUCH WITH YOU.</p>
+          </div>
+        </header>
+
+        <main>
+          <FieldWrapper>
+            <button 
+              className={ (viewPurpose === 'need-service' ? "bg-blue text-white" : "bg-slate-200") + " p-2 w-full text-center rounded-full cursor-pointer mx-auto block"}
+              onClick={e => {
+                setViewPurpose("need-service")
+              }}
+            >
+              Do you need any service?
+            </button>
+            <p className="text-center font-bold my-4 text-[14px]">OR</p>
+            <button 
+              className={ (viewPurpose === 'see-projects' ? "bg-blue text-white" : "bg-slate-200") + " p-2 w-full text-center rounded-full cursor-pointer mx-auto block"}
+              onClick={e => {
+                setViewPurpose("see-projects")
+                onViewProjects()
+              }}
+            >
+              Just want to view the projects?
+            </button>
+          </FieldWrapper>
+
+          {viewPurpose === 'need-service' && <div ref={fieldsStartRef}>
+            <FieldWrapper>
+              <FieldLabel>Type <RequiredMark /></FieldLabel>
+              <div className="my-2">
+                <input type="radio" name="type" value="residential" id="type-res" onClick={e => setFormFields(old => ({...old, type: "residential"}))} />
+                <label htmlFor="type-res" className="mx-2">Residential</label>
+              </div>
+              <div className="my-2">
+                <input type="radio" name="type" value="commercial" id="type-comm" onClick={e => setFormFields(old => ({...old, type: "commercial"}))} />
+                <label htmlFor="type-comm" className="mx-2">Commercial</label>
+              </div>
+              { fieldErrors?.type && <FieldError>{fieldErrors.type}</FieldError> }
+            </FieldWrapper>
+
+            <FieldWrapper>
+              <div>
+                <FieldLabel htmlFor={"plot-size"}>Plot Size <RequiredMark /></FieldLabel>
+                <select name="plot-size" id="plot-size" className="border-2 border-slate-200 bg-slate-200 rounded-lg p-2 w-full my-2" onChange={e => setFormFields(old => ({...old, plotSize: e.target.value}))}>
+                  <option value="">Choose plot size..</option>
+                  {[
+                    {label: '10 Marla', value: '10-marla'},
+                    {label: '1 Kanal', value: '1-kanal'},
+                    {label: '2 Kanal', value: '2-kanal'},
+                    {label: '4 Kanal', value: '4-kanal'},
+                    {label: '4 Kanal+', value: '4plus-kanal'},
+                  ].map((item, index) => (
+                    <option value={item.value} key={'plot-size-opt-' + index}>{item.label}</option>
+                  ))}
+                </select>
+                { fieldErrors?.plotSize && <FieldError>{fieldErrors.plotSize}</FieldError> }
+              </div>
+              
+            </FieldWrapper>
+
+            <FieldWrapper>
+                <FieldLabel htmlFor={"service"}>Service <RequiredMark /></FieldLabel>
+                <select name="service" id="service" className="border-2 border-slate-200 bg-slate-200 rounded-lg p-2 w-full my-2" onChange={e => setFormFields(old => ({...old, service: e.target.value}))}>
+                  <option value="">Choose service..</option>
+                  {[
+                    {"label":"ARHITECTURAL DESIGN SERVICES","value":"ARHITECTURAL DESIGN SERVICES"},{"label":"INTERIOR DESIGN SERVICES","value":"INTERIOR DESIGN SERVICES"},{"label":"CONSTRUCTION GREY","value":"CONSTRUCTION GREY"},{"label":"CONSTRUCTION FINISHES","value":"CONSTRUCTION FINISHES"},{"label":"PROJECT MANAGEMENT SERVICES","value":"PROJECT MANAGEMENT SERVICES"},{"label":"FURNITURE PRODUCTION","value":"FURNITURE PRODUCTION"}
+                  ].map((item, index) => (
+                    <option value={item.value} key={'plot-size-opt-' + index}>{item.label}</option>
+                  ))}
+                </select>
+                { fieldErrors?.service && <FieldError>{fieldErrors.service}</FieldError> }
+            </FieldWrapper>
+
+            <FieldWrapper>
+              <FieldLabel>Location <RequiredMark /></FieldLabel>
+              <textarea
+                id="location"
+                className="block border-2 border-slate-200 rounded-lg w-full my-2 p-4"
+                rows="3"
+                placeholder="Enter your location.."
+                onChange={e => setFormFields(old => ({...old, location: e.target.value}))}
+              ></textarea>
+              { fieldErrors?.location && <FieldError>{fieldErrors.location}</FieldError> }
+            </FieldWrapper>
+
+            <FieldWrapper>
+              <FieldLabel>Contact Information</FieldLabel>
+              <div>
+                <div className="my-4">
+                  <label htmlFor="user-name" className="text-[14px] text-slate-500">Full Name <RequiredMark /></label>
+                  <input 
+                    type="text" 
+                    className="block w-full box-border rounded-lg border-2 p-2"
+                    placeholder="i.e. John Doe"
+                    onChange={e => setFormFields(old => ({...old, name: e.target.value}))}
+                  />
+                  { fieldErrors?.name && <FieldError>{fieldErrors.name}</FieldError> }
+                </div>
+
+                <div className="my-4">
+                  <label htmlFor="user-contact" className="text-[14px] text-slate-500">Contact <RequiredMark /></label>
+                  <input 
+                    type="text" 
+                    className="block w-full box-border rounded-lg border-2 p-2"
+                    placeholder="i.e. 03360123456"
+                    onChange={e => setFormFields(old => ({...old, phone: e.target.value}))}
+                  />
+                  { fieldErrors?.phone && <FieldError>{fieldErrors.phone}</FieldError> }
+                </div>
+
+                <div className="my-4">
+                  <label htmlFor="user-city" className="text-[14px] text-slate-500">City <RequiredMark /></label>
+                  <select name="user-city" id="user-city" className="border-2 border-slate-200 bg-slate-200 rounded-lg p-2 w-full my-0" onChange={e => setFormFields(old => ({...old, city: e.target.value}))}>
+                    <option value="">Choose city..</option>
+                    {PakistanCities.map((item, index) => (
+                      <option key={"pk-city-" + index} value={item}>{item}</option>
+                    ))}
+                  </select>
+                  { fieldErrors?.city && <FieldError>{fieldErrors.city}</FieldError> }
+                </div>
+              </div>
+            </FieldWrapper>
+
+            <button 
+              role="button" 
+              className="w-full h-[40px] relative bg-blue disabled:bg-slate-500 hover:bg-blue-400 py-2 rounded-full text-white shadow-md my-2"
+              disabled={isLoading}
+              onClick={onSubmit}
+            >
+              <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+                {
+                  isLoading ? 
+                  <img src={AppImages.loading} className="w-[30px] svg-white" /> :
+                  <span>Submit</span>
+                }
+              </div>
+            </button>
+          </div>}
+        </main>
+      </div>
+
+      <SimpleModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      >
+        <div className="w-[80vw] min-h-[20vh] text-center">
+          <div>
+            <img src={AppImages.checkmark} className="svg-green w-[50px] mx-auto my-2" />
+          </div>
+          <h1 className="font-semibold text-green-600">Submitted!</h1>
+          <div className="py-4">Your request has been submitted successfully!</div>
+          <button 
+            className="bg-green-600 text-white cursor-pointer rounded-full py-1 min-w-[35vw]"
+            onClick={e => {
+              window.location.reload()
+            }}
+          >OK</button>
+        </div>
+      </SimpleModal>
+    </>
+  );
+}
+
+function FieldWrapper({ children }) {
+  return (
+    <div className="bg-white my-6 px-4 py-4 rounded-xl shadow-md">
+      {children}
+    </div>
+  );
+}
+
+function FieldLabel({ children, htmlFor }) {
+  return <label htmlFor={htmlFor} className="text-[#000]">{children}</label>
+}
+
+function RequiredMark() {
+  return <span className="text-red-600 text-[17px]">*</span>
+}
+
+function FieldError({ children }) {
+  return <div className="my-2 text-red-500 text-[14px]">{children}</div>
+}
+
+export default GalleriaRequestForm;
