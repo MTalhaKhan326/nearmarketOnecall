@@ -1,8 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AppImages } from "../../../Asset/images/image.js";
 import { PakistanCities } from "../../../utils/data/pk-cities.js";
 import SimpleModal from "../../basic/SimpleModal.jsx";
 import axios from "axios";
+import GalleriaFavIcon from "./GalleriaFavIcon.jsx";
+import GalleriaMSClarity from "./Analytics/GalleriaMSClarity.jsx";
+import GalleriaGoogleAnalytics from "./Analytics/GalleriaGoogleAnalytics.jsx";
+import { getBrowser, getOperatingSystem } from "../../../utils/helpers.js";
+import GalleriaMetaPixel from "./Analytics/GalleriaMetaPixel.jsx";
+import { v4 as uuidv4 } from 'uuid';
+import Select from 'react-select';
 
 function GalleriaRequestForm() {
   const [viewPurpose, setViewPurpose] = useState(null)
@@ -14,12 +21,17 @@ function GalleriaRequestForm() {
     name: null,
     phone: null,
     city: null,
+    email: null,
   }
   const [formFields, setFormFields] = useState(fields)
   const [fieldErrors, setFieldErrors] = useState({})
   const [isLoading, setIsLoading] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const fieldsStartRef = useRef(null)
+
+  function isValidEmail(email) {
+    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+  }
 
   function onSubmit(e) {
     e.preventDefault()
@@ -43,9 +55,17 @@ function GalleriaRequestForm() {
     }
     if(!formFields.phone) {
       errors.phone = "This field is required"
+    } else {
+      const ph = formFields.phone?.toString().replace(/[^0-9]/gi, "")
+      if(ph.length < 10) {
+        errors.phone = "Invalid phone number"
+      }
     }
     if(!formFields.city) {
       errors.city = "This field is required"
+    }
+    if(formFields.email && !isValidEmail(formFields.email)) {
+      errors.email = "Invalid email"
     }
 
     if(Object.keys(errors).length) {
@@ -55,27 +75,67 @@ function GalleriaRequestForm() {
     }
 
     setIsLoading(true)
-    axios.post("https://realestate.onecallapp.com/api/save-lead-queue", {
+    const apiUrl = "https://realestate.onecallapp.com/api/save-lead-queue"
+    const payload = {
       name: formFields.name,
-      phone: formFields.phone,
+      phone: formFields.phone?.toString().replace(/[^0-9]/gi, ""),
       city: formFields.city,
       location: formFields.location,
       plot_size: formFields.plotSize,
       services: formFields.service,
       property_type: formFields.type,
-    }).then(res => {
+      email: formFields.email
+    }
+    
+    axios.post(apiUrl, payload).then(res => {
       setFormFields(fields)
       setFieldErrors({})
       setIsModalOpen(true)
+      log("gd_req_api_response_save_lead", { success: true, apiUrl: apiUrl, apiPayload: payload, apiResponse: res?.data })
     }).catch(e => {
-      console.log(e)
+      log("gd_req_api_response_save_lead", { error: true, apiUrl: apiUrl, apiPayload: payload, error: e instanceof Error ? e.message : e })
     }).finally(() => {
       setIsLoading(false)
     })
   }
 
+  async function getIP() {
+    let ip = sessionStorage.getItem('ip')
+    if(ip?.length) {
+      return ip 
+    }
+    ip = await axios.get("https://api.ipify.org/?format=json").then(res => res?.data?.ip).catch(e => null)
+    if(ip) {
+      sessionStorage.setItem('ip', ip)
+    }
+    return ip 
+  }
+
+  function getUUID() {
+    let uuid = localStorage.getItem("uuid")
+    if(uuid) {
+      return uuid
+    }
+    uuid = uuidv4()
+    localStorage.setItem('uuid', uuid)
+    return uuid 
+  }
+
+  async function log(tag, value) {
+    value = {
+      os: getOperatingSystem(window),
+      browser: getBrowser(window),
+      date: new Date(),
+      url: window.location.href,
+      uuid: getUUID(),
+      ...value 
+    }
+    value = JSON.stringify(value)
+    return axios.post(`https://realestate.onecallapp.com/api/gd-lead-log`, {tag, value}).catch(e => null)
+  }
+
   function onViewProjects() {
-    axios.post("https://realestate.onecallapp.com/api/project_view")
+    axios.post("https://realestate.onecallapp.com/api/project_view").catch(e => null)
     window.open("https://instagram.com/galleriadesigns.com.pk?igshid=OGQ5ZDc2ODk2ZA==", "_blank")
   }
 
@@ -83,13 +143,25 @@ function GalleriaRequestForm() {
     fieldsStartRef?.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  const cityOptions = useMemo(() => PakistanCities.map(city => ({ value: city, label: city })))
+
   useEffect(() => {
     document.body.classList.add("bg-slate-200")
+    const prevTitle = document.title 
     document.title = "Lead Generation"
+    log('gd_req_page_view')
+    return () => {
+      document.title = prevTitle
+    }
   }, [])
 
   return (  
     <>
+      <GalleriaFavIcon />
+      <GalleriaMSClarity />
+      <GalleriaGoogleAnalytics />
+      <GalleriaMetaPixel />
+
       <div className="block mx-auto mt-24 mb-16 px-4 bg-slate-200">
         <header className="border-2 rounded-lg bg-white shadow-md">
           <div className="relative">
@@ -111,6 +183,8 @@ function GalleriaRequestForm() {
               className={ (viewPurpose === 'need-service' ? "bg-blue text-white" : "bg-slate-200") + " p-2 w-full text-center rounded-full cursor-pointer mx-auto block"}
               onClick={e => {
                 setViewPurpose("need-service")
+                log("gd_req_click_on_need_service")
+                setTimeout(scrollToTop, 200)
               }}
             >
               Do you need any service?
@@ -120,6 +194,7 @@ function GalleriaRequestForm() {
               className={ (viewPurpose === 'see-projects' ? "bg-blue text-white" : "bg-slate-200") + " p-2 w-full text-center rounded-full cursor-pointer mx-auto block"}
               onClick={e => {
                 setViewPurpose("see-projects")
+                log("gd_req_click_on_see_projects")
                 onViewProjects()
               }}
             >
@@ -212,13 +287,39 @@ function GalleriaRequestForm() {
                 </div>
 
                 <div className="my-4">
+                  <label htmlFor="user-email" className="text-[14px] text-slate-500">Email</label>
+                  <input 
+                    type="text" 
+                    className="block w-full box-border rounded-lg border-2 p-2"
+                    placeholder="i.e. johndoe@gmail.com"
+                    onChange={e => setFormFields(old => ({...old, email: e.target.value}))}
+                  />
+                  { fieldErrors?.email && <FieldError>{fieldErrors.email}</FieldError> }
+                </div>
+
+                <div className="my-4">
                   <label htmlFor="user-city" className="text-[14px] text-slate-500">City <RequiredMark /></label>
-                  <select name="user-city" id="user-city" className="border-2 border-slate-200 bg-slate-200 rounded-lg p-2 w-full my-0" onChange={e => setFormFields(old => ({...old, city: e.target.value}))}>
+                  <Select 
+                    options={cityOptions}
+                    styles={{
+                      control: (baseStyle, state) => ({
+                        ...baseStyle,
+                        border: "2px solid #e5e7eb",
+                        borderRadius: "0.5rem",
+                        padding: "0.1rem"
+                      })
+                    }}
+                    placeholder="Select city"
+                    onChange={e => {
+                      setFormFields(old => ({...old, city: e?.value}))
+                    }}
+                  />
+                  {/* <select name="user-city" id="user-city" className="border-2 border-slate-200 bg-slate-200 rounded-lg p-2 w-full my-0" onChange={e => setFormFields(old => ({...old, city: e.target.value}))}>
                     <option value="">Choose city..</option>
                     {PakistanCities.map((item, index) => (
                       <option key={"pk-city-" + index} value={item}>{item}</option>
                     ))}
-                  </select>
+                  </select> */}
                   { fieldErrors?.city && <FieldError>{fieldErrors.city}</FieldError> }
                 </div>
               </div>

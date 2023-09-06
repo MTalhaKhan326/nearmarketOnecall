@@ -46,6 +46,7 @@ import ph19 from "./ph19.png"
 import ph20 from "./ph20.png"
 import whatsappIcon from "./whatsappIcon.png"
 import galleriaDesignsLogo from "./galleria-designs-logo.png"
+import galleriaDesignsFavIcon32x32 from "./galleria-favicon-16x16.png"
 
 export const AppImages = {
     whatsappIcon,
@@ -95,5 +96,6 @@ export const AppImages = {
     ph18,
     ph19,
     ph20,
-    galleriaDesignsLogo
+    galleriaDesignsLogo,
+    galleriaDesignsFavIcon32x32
 }
