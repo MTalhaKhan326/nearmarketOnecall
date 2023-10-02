@@ -45,6 +45,19 @@ import Mobileshop from './component/Mobileshop';
 import OnecallOffer from './component/modules/DropDown/OnecallOffer';
 import OnecallYt from './component/modules/DropDown/OnecallYt';
 import GalleriaRequestForm from './component/modules/Galleria/RequestForm.jsx';
+import AppOnlyRoute from './component/modules/OneCall/AppOnlyRoute.jsx';
+import MyBusinessContextProvider from './component/modules/OneCall/contexts/MyBusinessContext.jsx';
+import MBWelcomeScreen from './component/modules/OneCall/MyBusiness/MBWelcomeScreen.jsx';
+import MBLogin from './component/modules/OneCall/MyBusiness/MBLogin.jsx';
+import MBSignup from './component/modules/OneCall/MyBusiness/MBSignup.jsx';
+import SingleBusinessScreen from './component/modules/OneCall/SingleBusiness/SingleBusinessScreen.jsx';
+import MBPrivateRouteWrapper from './component/modules/OneCall/MyBusiness/MBPrivateRouteWrapper.jsx';
+import MBUpdateProfileScreen from './component/modules/OneCall/MyBusiness/MBUpdateProfile.jsx';
+import MBHome from './component/modules/OneCall/MyBusiness/MBHome.jsx';
+import MBStatsScreen from './component/modules/OneCall/MyBusiness/MBStatsScreen.jsx';
+import NearByBusinesses from './component/modules/OneCall/NearbyBusinesses.jsx';
+import PostOfferScreen from './component/modules/OneCall/Offer/PostOfferScreen.jsx';
+import CreateOfferContextProvider from './component/modules/OneCall/Offer/CreateOfferContext.jsx';
 
 function App() {
   return (
@@ -161,6 +174,26 @@ function App() {
             }
           ></Route>
           <Route path="/galleria/request" element={<GalleriaRequestForm />}></Route>
+          
+          <Route element={<AppOnlyRoute />}>
+            <Route element={<CreateOfferContextProvider />}>
+                <Route path="/app/post-offer" element={<PostOfferScreen />}></Route>
+            </Route>
+            <Route element={<MyBusinessContextProvider />}>
+              <Route element={<MBPrivateRouteWrapper />}>
+                <Route path="/app/my-business/home" element={<MBHome />}></Route>
+                <Route path="/app/my-business/stats" element={<MBStatsScreen />}></Route>
+                <Route path="/app/my-business/profile/update" element={<MBUpdateProfileScreen />}></Route>
+              </Route>
+              <Route path="/app/my-business/welcome" element={<MBWelcomeScreen />}></Route>
+              <Route path="/app/my-business/login" element={<MBLogin />}></Route>
+              <Route path="/app/my-business/signup" element={<MBSignup />}></Route>
+              
+            </Route>
+            <Route path="/app/single-business" element={<SingleBusinessScreen />}></Route>
+            <Route path="/app/nearby" element={<NearByBusinesses />}></Route>
+          </Route>
+
           <Route path="*" element={<NoMatch />}></Route>
         </Routes>
       </BrowserRouter>

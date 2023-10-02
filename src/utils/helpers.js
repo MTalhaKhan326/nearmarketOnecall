@@ -95,11 +95,26 @@ export function isEmail(input) {
 
 export function getOperatingSystem(window) {
     let operatingSystem = 'Not known';
+    let userAgent = navigator.userAgent || navigator.vendor || window.opera;
     if (window.navigator.appVersion.indexOf('Win') !== -1) { operatingSystem = 'Windows OS'; }
     if (window.navigator.appVersion.indexOf('Mac') !== -1) { operatingSystem = 'MacOS'; }
     if (window.navigator.appVersion.indexOf('X11') !== -1) { operatingSystem = 'UNIX OS'; }
     if (window.navigator.appVersion.indexOf('Linux') !== -1) { operatingSystem = 'Linux OS'; }
+    if (/android/i.test(userAgent)) { operatingSystem = "Android" }
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) { operatingSystem = "iOS" }
     return operatingSystem;
+}
+
+export function isAndroid() {
+    return getOperatingSystem(window) === 'Android' 
+}
+
+export function isIOS() {
+    return getOperatingSystem(window) === 'iOS'
+}
+
+export function isMobileOS() {
+    return isAndroid() || isIOS()
 }
 
 export function getBrowser(window) {

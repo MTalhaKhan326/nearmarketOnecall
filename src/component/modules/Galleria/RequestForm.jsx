@@ -366,11 +366,7 @@ function GalleriaRequestForm() {
 }
 
 function FieldWrapper({ children }) {
-  return (
-    <div className="bg-white my-6 px-4 py-4 rounded-xl shadow-md">
-      {children}
-    </div>
-  );
+  return <div className="bg-white my-6 px-4 py-4 rounded-xl shadow-md">{children}</div>
 }
 
 function FieldLabel({ children, htmlFor }) {
